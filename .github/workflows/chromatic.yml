@@ -1,26 +1,35 @@
-name: 'Chromatic'
+name: Chromatic
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - develop
   pull_request:
 
 jobs:
-  chromatic-deploy:
+  chromatic:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Setup Node
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Build library
-        run: yarn build
+      - name: Build Storybook
+        run: yarn build-storybook
 
       - name: Publish to Chromatic
-        run: yarn chromatic --project-token=${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+        uses: chromaui/action@latest
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          autoAcceptChanges: "main"
