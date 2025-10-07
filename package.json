@@ -14,7 +14,8 @@
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "chromatic": "dotenv -e .env -- npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
   "dependencies": {
     "react": "^19.1.1",
@@ -50,6 +51,7 @@
     "babel-plugin-styled-components": "^2.1.4",
     "chromatic": "^13.3.0",
     "commitlint": "^19.8.1",
+    "dotenv-cli": "^10.0.0",
     "eslint": "^9.35.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react": "^7.37.5",

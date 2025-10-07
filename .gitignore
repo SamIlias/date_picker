@@ -2,8 +2,7 @@ node_modules/
 dist/
 build/
 *.tsbuildinfo
-.env.development
-.env.production
+.env
 *.log
 *.cache
 .idea
