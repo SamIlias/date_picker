@@ -1,5 +1,5 @@
 import { BaseCalendar } from './BaseCalendar';
-import { DateLimitsCalendarDecorator } from './decorators/DateLimitsCalendarDecorator'; // предположим, будет реализован
+import { DateLimitsCalendarDecorator } from './decorators/DateLimitsCalendarDecorator';
 import { RangeCalendarDecorator } from './decorators/RangeCalendarDecorator';
 import { TasksCalendarDecorator } from './decorators/TasksCalendarDecorator';
 import { CalendarConfig, FeatureType, ICalendar } from './types';
