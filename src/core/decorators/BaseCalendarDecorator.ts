@@ -1,6 +1,6 @@
-import { BaseCalendar } from 'core/BaseCalendar';
+import { BaseCalendar } from '@/core/BaseCalendar';
 
-import { ICalendar } from '../types';
+import { ICalendar, WeekStartsOn } from '../types';
 
 export class BaseCalendarDecorator implements ICalendar {
   protected calendar: BaseCalendar;
@@ -13,35 +13,39 @@ export class BaseCalendarDecorator implements ICalendar {
     return this.calendar.config;
   }
 
-  get currentDate() {
-    return this.calendar.currentDate;
+  isToday(date: Date): boolean {
+    return this.calendar.isToday(date);
   }
 
-  setDate(date: Date): void {
-    this.calendar.setDate(date);
+  isSameDay(date1: Date, date2?: Date): boolean {
+    return this.calendar.isSameDay(date1, date2);
   }
 
-  getDate(): Date {
-    return this.calendar.getDate();
+  isWeekend(date: Date): boolean {
+    return this.calendar.isWeekend(date);
   }
 
-  nextMonth(): void {
-    this.calendar.nextMonth();
+  isHoliday(date: Date, holidays: Date[]): boolean {
+    return this.calendar.isHoliday(date, holidays);
   }
 
-  prevMonth(): void {
-    this.calendar.prevMonth();
+  isOtherMonth(date: Date, currentDate: Date): boolean {
+    return this.calendar.isOtherMonth(date, currentDate);
   }
 
-  goToDate(date: Date): void {
-    this.calendar.goToDate(date);
+  nextMonthDay(date: Date): Date {
+    return this.calendar.nextMonthDay(date);
   }
 
-  getDaysForMonthGrid(date: Date): Date[][] {
-    return this.calendar.getDaysForMonthGrid(date);
+  prevMonthDay(date: Date): Date {
+    return this.calendar.prevMonthDay(date);
   }
 
-  getDaysForWeekGrid(date: Date): Date[] {
-    return this.calendar.getDaysForWeekGrid(date);
+  getDaysForMonthGrid(date: Date, weekStartsOn: WeekStartsOn): Date[][] {
+    return this.calendar.getDaysForMonthGrid(date, weekStartsOn);
+  }
+
+  getYearsForGrid(currentYear: number, count: number): number[] {
+    return this.calendar.getYearsForGrid(currentYear, count);
   }
 }

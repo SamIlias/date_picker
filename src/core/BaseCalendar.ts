@@ -1,8 +1,8 @@
-import { CalendarConfig, ICalendar } from './types';
+import { CalendarConfig, ICalendar, WeekStartsOn } from './types';
 import * as u from './utils';
 
 const defaultCalendarConfig: CalendarConfig = {
-  view: 'month',
+  view: 'months',
   weekStartsOn: 'monday',
   initialDate: new Date(),
   minDate: null,
@@ -13,45 +13,60 @@ const defaultCalendarConfig: CalendarConfig = {
 };
 
 export class BaseCalendar implements ICalendar {
-  currentDate: Date;
   config: CalendarConfig;
 
   constructor(config: CalendarConfig = defaultCalendarConfig) {
     this.config = config;
-    this.currentDate = config.initialDate || new Date();
   }
 
-  public setDate(date: Date): void {
-    this.currentDate = date;
+  public isToday(date: Date): boolean {
+    const today = new Date();
+    return (
+      date.getDate() === today.getDate() &&
+      date.getMonth() === today.getMonth() &&
+      date.getFullYear() === today.getFullYear()
+    );
   }
 
-  public getDate(): Date {
-    return this.currentDate;
+  public isSameDay(date1: Date, date2?: Date | null): boolean {
+    if (!date2) return false;
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    );
   }
 
-  public nextMonth(): void {
-    const next = new Date(this.currentDate);
-    next.setMonth(this.currentDate.getMonth() + 1);
-    this.setDate(next);
+  public isWeekend(date: Date): boolean {
+    const day = date.getDay();
+    return day === 0 || day === 6;
   }
 
-  public prevMonth(): void {
-    const prev = new Date(this.currentDate);
-    prev.setMonth(this.currentDate.getMonth() - 1);
-    this.setDate(prev);
+  public isHoliday(date: Date, holidays: Date[]): boolean {
+    return holidays.some((holiday) => this.isSameDay(date, holiday));
   }
 
-  public goToDate(date: Date): void {
-    this.setDate(date);
+  public isOtherMonth(date: Date, currentDate: Date): boolean {
+    return date.getMonth() !== currentDate.getMonth();
   }
 
-  public getDaysForMonthGrid(currentDate: Date): Date[][] {
-    const { weekStartsOn } = this.config;
+  public nextMonthDay(date: Date): Date {
+    const next = new Date(date);
+    next.setMonth(date.getMonth() + 1);
+    return next;
+  }
+
+  public prevMonthDay(date: Date): Date {
+    const next = new Date(date);
+    next.setMonth(date.getMonth() - 1);
+    return next;
+  }
+
+  public getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[][] {
     return u.getDaysForMonthGrid(currentDate, weekStartsOn);
   }
 
-  public getDaysForWeekGrid(currentDate: Date): Date[] {
-    const { weekStartsOn } = this.config;
-    return u.getDaysForWeekGrid(currentDate, weekStartsOn);
+  public getYearsForGrid(currentYear: number, count: number): number[] {
+    return u.getYearsForGrid(currentYear, count);
   }
 }

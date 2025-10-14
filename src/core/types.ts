@@ -1,13 +1,17 @@
-export type WeekStarts = 'monday' | 'sunday';
+import { monthNames } from '@/core/constants';
+
+export type WeekStartsOn = 'monday' | 'sunday';
+export type ViewType = 'weeks' | 'months' | 'years';
+export type MonthNames = (typeof monthNames)[number];
 
 export interface CalendarConfig {
-  view?: 'week' | 'month' | 'year';
-  weekStartsOn: WeekStarts;
+  view: ViewType;
+  weekStartsOn: WeekStartsOn;
   initialDate?: Date;
   minDate?: Date | null;
   maxDate?: Date | null;
-  showWeekends?: boolean;
-  holidays?: Date[];
+  showWeekends: boolean;
+  holidays: Date[];
   features?: FeatureType[];
 }
 
@@ -15,19 +19,22 @@ export type FeatureType = 'withTasks' | 'withRange' | 'withDateLimits';
 
 export interface ICalendar {
   config: CalendarConfig;
-  currentDate: Date;
 
-  setDate(date: Date): void;
+  isToday(date: Date): boolean;
 
-  getDate(): Date;
+  isSameDay(date1: Date, date2?: Date | null): boolean;
 
-  nextMonth(): void;
+  isWeekend(date: Date): boolean;
 
-  prevMonth(): void;
+  isHoliday(date: Date, holidays: Date[]): boolean;
 
-  goToDate(date: Date): void;
+  isOtherMonth(date: Date, currentDate: Date): boolean;
 
-  getDaysForMonthGrid(currentDate: Date): Date[][];
+  nextMonthDay(date: Date): Date;
 
-  getDaysForWeekGrid(currentDate: Date): Date[];
+  prevMonthDay(date: Date): Date;
+
+  getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[][];
+
+  getYearsForGrid(currentYear: number, count: number): number[];
 }

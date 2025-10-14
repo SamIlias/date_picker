@@ -1,6 +1,6 @@
-import { WeekStarts } from '../types';
+import { WeekStartsOn } from '../types';
 
-export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStarts): Date[][] {
+export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[][] {
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
@@ -12,8 +12,8 @@ export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStarts)
     return weekStartsOn === 'monday' ? (day === 0 ? 7 : day) : day + 1;
   };
 
-  const firstWeekDay = getWeekDay(firstDayOfMonth); // 1..7
-  const lastWeekDay = getWeekDay(lastDayOfMonth); // 1..7
+  const firstWeekDay = getWeekDay(firstDayOfMonth);
+  const lastWeekDay = getWeekDay(lastDayOfMonth);
 
   const gridStart = new Date(firstDayOfMonth);
   gridStart.setDate(firstDayOfMonth.getDate() - (firstWeekDay - 1));
@@ -49,7 +49,7 @@ export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStarts)
   return weeks;
 }
 
-export function getDaysForWeekGrid(currentDate: Date, weekStartsOn: WeekStarts): Date[] {
+export function getDaysForWeekGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[] {
   const day = currentDate.getDay();
   const diff = weekStartsOn === 'monday' ? (day === 0 ? -6 : 1 - day) : -day;
 
@@ -64,4 +64,9 @@ export function getDaysForWeekGrid(currentDate: Date, weekStartsOn: WeekStarts):
   }
 
   return week;
+}
+
+export function getYearsForGrid(currentYear: number, count: number): number[] {
+  const half = Math.floor(count / 2);
+  return Array.from({ length: count }, (_, i) => currentYear - half + i);
 }
