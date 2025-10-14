@@ -45,8 +45,8 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
   const [showWeekends, setShowWeekends] = useState(calendar.config.showWeekends);
   const [weekStartsOn, setWeekStartsOn] = useState(calendar.config.weekStartsOn);
   const [showHolidays, setShowHolidays] = useState(!!calendar.config.holidays.length);
-  const [rangeStart, setRangeStart] = useState(null);
-  const [rangeEnd, setRangeEnd] = useState(null);
+  // const [rangeStart, setRangeStart] = useState(null);
+  // const [rangeEnd, setRangeEnd] = useState(null);
   const [pointedDate, setPointedDate] = useState(currentDate); //not today
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
@@ -123,8 +123,8 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
           onDateSelect={setSelectedDate}
           onNextMonth={onNextMonthClick}
           onPrevMonth={onPrevMonthClick}
-          rangeEnd={rangeEnd}
-          rangeStart={rangeStart}
+          // rangeEnd={rangeEnd}
+          // rangeStart={rangeStart}
         />
       )}
     </ThemeProvider>
