@@ -33,9 +33,9 @@ export const DateCell = styled.div<DateCellProps>`
   }) => css`
     padding: ${theme.spacing.sm};
     text-align: center;
-    border-radius: ${theme.borderRadius.sm};
+    border-radius: 0;
     cursor: pointer;
-    font-size: ${theme.fontSize.h6};
+    font-size: ${theme.fontSize.h1};
     font-family: ${theme.fontFamily.primary};
     font-weight: ${theme.fontWeight.regular};
     transition: all ${TRANSITION_DURATION};
@@ -45,7 +45,11 @@ export const DateCell = styled.div<DateCellProps>`
     justify-content: center;
     min-height: ${CELL_MIN_HEIGHT};
 
-    color: ${$isOtherMonth ? theme.color.text.placeholder : theme.color.text.primary};
+    color: ${$isInRange
+      ? theme.color.text.ranged
+      : $isOtherMonth
+        ? theme.color.text.placeholder
+        : theme.color.text.primary};
 
     background-color: ${() => {
       if ($isSelected || $isRangeEnd) return theme.color.background.activeCell;
@@ -57,7 +61,11 @@ export const DateCell = styled.div<DateCellProps>`
     ${($isSelected || $isRangeEnd || $isRangeStart) &&
     css`
       color: white;
-      font-weight: 600;
+      font-weight: ${theme.fontWeight.bold};
+    `}
+    ${$isSelected &&
+    css`
+      border-radius: ${theme.borderRadius.sm};
     `}
     ${$isToday &&
     !$isSelected &&
@@ -75,6 +83,21 @@ export const DateCell = styled.div<DateCellProps>`
       color: ${theme.color.red.dark};
       font-weight: ${theme.fontWeight.semibold};
     `}
+    ${$isRangeStart &&
+    css`
+      border-top-left-radius: ${theme.borderRadius.lg};
+      border-bottom-left-radius: ${theme.borderRadius.lg};
+    `}
+    ${$isRangeEnd &&
+    css`
+      border-top-right-radius: ${theme.borderRadius.lg};
+      border-bottom-right-radius: ${theme.borderRadius.lg};
+    `}
+    ${$isRangeStart &&
+    $isRangeEnd &&
+    css`
+      border-radius: ${theme.borderRadius.lg};
+    `}
     &:hover {
       background-color: ${$isSelected
         ? theme.color.background.activeCell
@@ -83,7 +106,7 @@ export const DateCell = styled.div<DateCellProps>`
 
     @media ${theme.breakpoint.mobile} {
       padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.small};
+      font-size: ${theme.fontSize.h4};
       min-height: ${CELL_MIN_HEIGHT_MOBILE};
     }
   `}
@@ -95,7 +118,7 @@ export const Cell = styled.div<CellProps>`
     text-align: center;
     border-radius: ${theme.borderRadius.sm};
     cursor: pointer;
-    font-size: ${theme.fontSize.h6};
+    font-size: ${theme.fontSize.h3};
     font-family: ${theme.fontFamily.primary};
     font-weight: ${theme.fontWeight.regular};
     transition: all ${TRANSITION_DURATION};
@@ -123,7 +146,7 @@ export const Cell = styled.div<CellProps>`
 
   @media ${theme.breakpoint.mobile} {
     padding: ${theme.spacing.xs};
-    font-size: ${theme.fontSize.small};
+    font-size: ${theme.fontSize.h5};
     min-height: ${CELL_MIN_HEIGHT_MOBILE};
   }
   `}

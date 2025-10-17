@@ -4,11 +4,13 @@ const baseTheme: DefaultTheme = {
   color: {
     background: {
       primary: '#ffffff',
+      button: '#3199da',
       activeCell: '#2F80ED',
       onCellHover: '#F1F1F1',
       range: '#2F80ED1A',
       rangeStartCell: '#2F80ED99',
       rangeEndCell: '#2F80ED',
+      disabled: '#797979',
     },
     red: {
       main: '#FF3333',
@@ -19,6 +21,7 @@ const baseTheme: DefaultTheme = {
       primary: '#000000',
       secondary: '#444444',
       placeholder: '#888888',
+      ranged: '#2F80ED',
     },
   },
   breakpoint: {
@@ -70,6 +73,11 @@ const baseTheme: DefaultTheme = {
     md: '8px',
     lg: '16px',
   },
+  shadow: {
+    soft: '0 2px 6px #0000001A',
+    medium: '0 4px 12px #00000033',
+    hard: '0 8px 20px #0000004D',
+  },
 };
 
 export const lightTheme: DefaultTheme = {
@@ -82,16 +90,19 @@ export const darkTheme: DefaultTheme = {
     ...baseTheme.color,
     background: {
       primary: '#131313',
+      button: '#3a626c',
       activeCell: '#2F80ED',
       onCellHover: '#696868',
       range: '#2F80ED1A',
       rangeStartCell: '#2F80ED99',
       rangeEndCell: '#2F80ED',
+      disabled: '#575757',
     },
     text: {
       primary: '#ffffff',
       secondary: '#666666',
       placeholder: '#888888',
+      ranged: '#2F80ED',
     },
   },
 };

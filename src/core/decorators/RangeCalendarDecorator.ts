@@ -3,10 +3,11 @@ import { BaseCalendarDecorator } from './BaseCalendarDecorator';
 
 export class RangeCalendarDecorator extends BaseCalendarDecorator {
   public isInRange(date: Date, start: Date, end: Date): boolean {
-    return start <= date && start <= end;
+    const [from, to] = start <= end ? [start, end] : [end, start];
+    return from <= date && date <= to;
   }
 }
 
-export interface IRangeCalendar extends ICalendar {
-  isInRange(date: Date, start: Date, end: Date): boolean;
+export function hasRangeFeature(calendar: ICalendar): calendar is RangeCalendarDecorator {
+  return typeof (calendar as RangeCalendarDecorator).isInRange === 'function';
 }

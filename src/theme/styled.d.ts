@@ -5,11 +5,13 @@ declare module 'styled-components' {
     color: {
       background: {
         primary: string;
+        button: string;
         activeCell: string;
         onCellHover: string;
         range: string;
         rangeStartCell: string;
         rangeEndCell: string;
+        disabled: string;
       };
       red: {
         main: string;
@@ -20,6 +22,7 @@ declare module 'styled-components' {
         primary: string;
         secondary: string;
         placeholder: string;
+        ranged: string;
       };
     };
     breakpoint: {
@@ -71,6 +74,11 @@ declare module 'styled-components' {
       sm: string;
       md: string;
       lg: string;
+    };
+    shadow: {
+      soft: string;
+      medium: string;
+      hard: string;
     };
   }
 }

@@ -1,11 +1,9 @@
-import { BaseCalendar } from '@/core/BaseCalendar';
-
 import { ICalendar, WeekStartsOn } from '../types';
 
 export class BaseCalendarDecorator implements ICalendar {
-  protected calendar: BaseCalendar;
+  protected calendar: ICalendar;
 
-  constructor(calendar: BaseCalendar) {
+  constructor(calendar: ICalendar) {
     this.calendar = calendar;
   }
 

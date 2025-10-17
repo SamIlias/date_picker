@@ -1,8 +1,16 @@
+import { BaseCalendar } from '@/core/BaseCalendar';
+import { ICalendar, Task } from '@/core/types';
+
 import { BaseCalendarDecorator } from './BaseCalendarDecorator';
 
 export class TasksCalendarDecorator extends BaseCalendarDecorator {
   private storageKey = 'calendarTasks';
-  private tasks: Record<string, string[]> = {};
+  private tasks: Record<string, Task[]> = {};
+
+  constructor(calendar: BaseCalendar) {
+    super(calendar);
+    this.loadTasks();
+  }
 
   private getDateKey(date: Date): string {
     return date.toISOString().split('T')[0];
@@ -15,32 +23,52 @@ export class TasksCalendarDecorator extends BaseCalendarDecorator {
   public loadTasks(): void {
     const data = localStorage.getItem(this.storageKey);
     if (data) {
-      try {
-        this.tasks = JSON.parse(data);
-      } catch {
-        this.tasks = {};
-      }
+      this.tasks = JSON.parse(data);
     }
   }
 
-  public addTask(date: Date, task: string): void {
+  private validateTask(date: Date, value: string): string | null {
+    if (!value) return 'The field can not be empty';
+
+    const key = this.getDateKey(date);
+    const exists = this.tasks[key]?.some((t) => t.value === value);
+    if (exists) return 'The task already exists';
+
+    return null;
+  }
+
+  public addTask(date: Date, newTaskValue: string, setErrorMessage: (err: string) => void): void {
     const key = this.getDateKey(date);
     if (!this.tasks[key]) {
       this.tasks[key] = [];
     }
-    this.tasks[key].push(task);
+
+    const trimmed = newTaskValue.trim();
+
+    const error = this.validateTask(date, trimmed);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+
+    const newTask: Task = {
+      id: crypto.randomUUID(),
+      value: trimmed,
+    };
+
+    this.tasks[key].push(newTask);
     this.saveTasks();
   }
 
-  public removeTask(date: Date, index: number): void {
+  public removeTask(date: Date, task: Task): void {
     const key = this.getDateKey(date);
     if (!this.tasks[key]) return;
-    this.tasks[key].splice(index, 1);
+    this.tasks[key] = this.tasks[key].filter((t) => t.id !== task.id);
     if (this.tasks[key].length === 0) delete this.tasks[key];
     this.saveTasks();
   }
 
-  public getTasks(date: Date): string[] {
+  public getTasks(date: Date): Task[] {
     const key = this.getDateKey(date);
     return this.tasks[key] || [];
   }
@@ -49,4 +77,14 @@ export class TasksCalendarDecorator extends BaseCalendarDecorator {
     this.tasks = {};
     this.saveTasks();
   }
+}
+
+export function hasTasksFeature(calendar: ICalendar): calendar is TasksCalendarDecorator {
+  return (
+    typeof (calendar as TasksCalendarDecorator).addTask === 'function' &&
+    typeof (calendar as TasksCalendarDecorator).getTasks === 'function' &&
+    typeof (calendar as TasksCalendarDecorator).removeTask === 'function' &&
+    typeof (calendar as TasksCalendarDecorator).loadTasks === 'function' &&
+    typeof (calendar as TasksCalendarDecorator).clearAllTasks === 'function'
+  );
 }

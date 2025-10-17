@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 const TRANSITION_DURATION = '0.2s';
 const SHADOW = '0 2px 8px rgba(0, 0, 0, 0.1)';
-const HEADER_BUTTON_MIN_WIDTH = '80px';
+const HEADER_BUTTON_MIN_WIDTH = '40px';
 const HEADER_BUTTON_MIN_WIDTH_MOBILE = '60px';
 
 export const Calendar = styled.div`
@@ -31,12 +31,11 @@ export const CalendarHeader = styled.div`
 export const HeaderButton = styled.button`
   ${({ theme }) => css`
     padding: ${theme.spacing.sm} ${theme.spacing.base};
-    border: ${theme.borderThickness.thin} solid ${theme.color.text.placeholder};
-    border-radius: ${theme.borderRadius.sm};
+    border: none;
     background-color: ${theme.color.background.primary};
     color: ${theme.color.text.primary};
-    font-size: ${theme.fontSize.h6};
-    font-weight: ${theme.fontWeight.medium};
+    font-size: ${theme.fontSize.h1};
+    font-weight: ${theme.fontWeight.bold};
     font-family: ${theme.fontFamily.primary};
     cursor: pointer;
     transition: all ${TRANSITION_DURATION};
@@ -61,7 +60,7 @@ export const HeaderButton = styled.button`
 
 export const HeaderTitle = styled.h2`
   ${({ theme }) => css`
-    font-size: ${theme.fontSize.h3};
+    font-size: ${theme.fontSize.h2};
     font-weight: ${theme.fontWeight.semibold};
     color: ${theme.color.text.primary};
     font-family: ${theme.fontFamily.primary};
@@ -69,7 +68,7 @@ export const HeaderTitle = styled.h2`
     flex: 1;
 
     @media ${theme.breakpoint.mobile} {
-      font-size: ${theme.fontSize.h4};
+      font-size: ${theme.fontSize.h3};
     }
   `}
 `;
@@ -86,18 +85,30 @@ export const CalendarGrid = styled.div`
   `}
 `;
 
+export const MonthsCalendarGrid = styled.div`
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: ${theme.spacing.xs};
+
+    @media ${theme.breakpoint.mobile} {
+      gap: ${theme.spacing.xs};
+    }
+  `}
+`;
+
 export const WeekDayHeader = styled.div`
   ${({ theme }) => css`
     padding: ${theme.spacing.sm};
     text-align: center;
-    font-size: ${theme.fontSize.h6};
+    font-size: ${theme.fontSize.h1};
     font-weight: ${theme.fontWeight.semibold};
     color: ${theme.color.text.secondary};
     font-family: ${theme.fontFamily.primary};
 
     @media ${theme.breakpoint.mobile} {
       padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.small};
+      font-size: ${theme.fontSize.h3};
     }
   `}
 `;

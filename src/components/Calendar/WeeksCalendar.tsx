@@ -2,7 +2,7 @@ import { FC } from 'react';
 
 import { DateCell } from '@/components/Calendar/Cell/DateCell';
 import { monthNames, weekDaysStartsMonday, weekDaysStartsSunday } from '@/core/constants';
-import { RangeCalendarDecorator } from '@/core/decorators/RangeCalendarDecorator';
+import { hasRangeFeature } from '@/core/decorators/RangeCalendarDecorator';
 import { ICalendar, WeekStartsOn } from '@/core/types';
 
 import * as S from './styled';
@@ -61,7 +61,7 @@ export const WeeksCalendar: FC<CalendarProps> = ({
             $isToday={calendar.isToday(date)}
             $isSelected={calendar.isSameDay(date, selectedDate)}
             $isInRange={
-              calendar instanceof RangeCalendarDecorator && rangeStart && rangeEnd
+              hasRangeFeature(calendar) && rangeStart && rangeEnd
                 ? calendar.isInRange(date, rangeStart, rangeEnd)
                 : false
             }

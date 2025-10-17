@@ -3,8 +3,8 @@ import { ChangeEvent, FC } from 'react';
 import * as S from './styled';
 
 interface RangeInputProps {
-  from: string;
-  to: string;
+  from?: string;
+  to?: string;
   onFromChange: (value: string) => void;
   onToChange: (value: string) => void;
 }

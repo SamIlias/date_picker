@@ -3,7 +3,7 @@ import { ChangeEvent, FC } from 'react';
 import * as S from './styled';
 
 interface DateInputProps {
-  value: string;
+  value?: string;
   onChange: (value: string) => void;
   label?: string;
 }

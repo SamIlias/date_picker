@@ -17,6 +17,11 @@ export interface CalendarConfig {
 
 export type FeatureType = 'withTasks' | 'withRange' | 'withDateLimits';
 
+export type Task = {
+  id: string;
+  value: string;
+};
+
 export interface ICalendar {
   config: CalendarConfig;
 

@@ -18,7 +18,7 @@ export const MonthsCalendar: FC<MonthCalendarProps> = ({ currentMonth, onMonthSe
         <S.HeaderTitle>{'Months'}</S.HeaderTitle>
       </S.CalendarHeader>
 
-      <S.CalendarGrid>
+      <S.MonthsCalendarGrid>
         {monthNames.map((month, index) => (
           <Cell
             value={month}
@@ -27,7 +27,7 @@ export const MonthsCalendar: FC<MonthCalendarProps> = ({ currentMonth, onMonthSe
             $isCurrent={currentMonth === month}
           />
         ))}
-      </S.CalendarGrid>
+      </S.MonthsCalendarGrid>
     </S.Calendar>
   );
 };
