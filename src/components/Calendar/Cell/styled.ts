@@ -3,12 +3,29 @@ import styled, { css } from 'styled-components';
 import { CellProps } from '@/components/Calendar/Cell/Cell';
 import { DateCellProps } from '@/components/Calendar/Cell/DateCell';
 
-const TRANSITION_DURATION = '0.2s';
+const TRANSITION_DURATION = '0.5s';
 const CELL_MIN_HEIGHT = '40px';
 const CELL_MIN_HEIGHT_MOBILE = '32px';
 
-type DateCellPropsForStyles = Omit<DateCellProps, 'date' | 'onDoubleClick' | 'onClick'>;
-type CellPropsForStyles = Pick<CellProps, '$isCurrent'>;
+type DateCellPropsForStyles = Omit<
+  DateCellProps,
+  'date' | 'onDoubleClick' | 'onClick' | 'hasTasks'
+>;
+type CellPropsForStyles = Pick<CellProps<number | string>, '$isCurrent'>;
+
+export const TaskLabel = styled.span`
+  ${({ theme }) => css`
+    font-size: ${theme.fontSize.small};
+    color: ${theme.color.red.light};
+    height: 30%;
+  `}
+`;
+
+export const DateNumber = styled.div`
+  display: flex;
+  align-items: end;
+  height: 70%;
+`;
 
 export const DateCell = styled.div<DateCellPropsForStyles>`
   ${({
@@ -21,6 +38,7 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
     $isToday,
     $isWeekend,
     $isHoliday,
+    $isDateAllowed,
   }) => css`
     padding: ${theme.spacing.sm};
     text-align: center;
@@ -29,9 +47,12 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
     font-size: ${theme.fontSize.h1};
     font-family: ${theme.fontFamily.primary};
     font-weight: ${theme.fontWeight.regular};
-    transition: all ${TRANSITION_DURATION};
+    transition:
+      background-color ${TRANSITION_DURATION} ease,
+      color ${TRANSITION_DURATION} ease;
     aspect-ratio: 1;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: ${CELL_MIN_HEIGHT};
@@ -95,7 +116,14 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
         : theme.color.background.onCellHover};
     }
 
-    @media ${theme.breakpoint.mobile} {
+    ${!$isDateAllowed &&
+    css`
+      cursor: not-allowed;
+      opacity: 0.5;
+      pointer-events: none;
+      background-color: ${theme.color.background.disabled};
+      color: ${theme.color.text.placeholder};
+    `} @media ${theme.breakpoint.mobile} {
       padding: ${theme.spacing.xs};
       font-size: ${theme.fontSize.h4};
       min-height: ${CELL_MIN_HEIGHT_MOBILE};

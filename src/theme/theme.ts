@@ -10,7 +10,7 @@ const baseTheme: DefaultTheme = {
       range: '#2F80ED1A',
       rangeStartCell: '#2F80ED99',
       rangeEndCell: '#2F80ED',
-      disabled: '#797979',
+      disabled: 'rgba(241,178,178,0.47)',
     },
     red: {
       main: '#FF3333',

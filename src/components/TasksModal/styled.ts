@@ -154,12 +154,12 @@ export const AddButton = styled.button`
   `}
 `;
 
-export const ErrorMessage = styled.p<{ visible?: boolean }>`
-  ${({ theme, visible }) => css`
+export const ErrorMessage = styled.p<{ isVisible?: boolean }>`
+  ${({ theme, isVisible }) => css`
     color: ${theme.color.red.main};
     text-align: center;
     font-size: ${theme.fontSize.h6};
     min-height: 1rem;
-    visibility: ${visible ? 'visible' : 'hidden'};
+    visibility: ${isVisible ? 'visible' : 'hidden'};
   `}
 `;

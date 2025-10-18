@@ -34,6 +34,7 @@ export const Settings: FC<SettingsProps> = ({
   };
 
   const onShowHolidaysCheck = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.checked);
     onShowHolidaysChange(e.target.checked);
   };
 

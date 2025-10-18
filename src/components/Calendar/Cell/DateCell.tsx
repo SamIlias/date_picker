@@ -1,11 +1,13 @@
 import { FC } from 'react';
 
 import * as S from './styled';
+import { DateNumber, TaskLabel } from './styled';
 
 export interface DateCellProps {
   date: Date;
   onClick: (date: Date) => void;
   onDoubleClick: () => void;
+  hasTasks: boolean;
   $isToday?: boolean;
   $isSelected?: boolean;
   $isInRange?: boolean;
@@ -14,12 +16,14 @@ export interface DateCellProps {
   $isOtherMonth?: boolean;
   $isWeekend?: boolean;
   $isHoliday?: boolean;
+  $isDateAllowed?: boolean;
 }
 
 export const DateCell: FC<DateCellProps> = ({
   date,
   onClick,
   onDoubleClick,
+  hasTasks,
   $isToday,
   $isSelected,
   $isInRange,
@@ -28,6 +32,7 @@ export const DateCell: FC<DateCellProps> = ({
   $isOtherMonth,
   $isWeekend,
   $isHoliday,
+  $isDateAllowed,
 }) => {
   const onCellClick = () => {
     onClick(date);
@@ -44,8 +49,10 @@ export const DateCell: FC<DateCellProps> = ({
       $isOtherMonth={$isOtherMonth}
       $isWeekend={$isWeekend}
       $isHoliday={$isHoliday}
+      $isDateAllowed={$isDateAllowed}
     >
-      {date.getDate()}
+      <DateNumber>{date.getDate()}</DateNumber>
+      <TaskLabel>{hasTasks ? '☀' : ''}</TaskLabel>
     </S.DateCell>
   );
 };

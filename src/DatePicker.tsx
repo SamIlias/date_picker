@@ -28,11 +28,11 @@ const config: CalendarConfig = {
   view: Views.WEEKS,
   weekStartsOn: WeekStartsOn.MONDAY,
   initialDate: new Date(),
-  minDate: null,
-  maxDate: null,
+  minDate: new Date(2025, 3, 10),
+  maxDate: new Date(2025, 11, 9),
   showWeekends: true,
   holidays: holidaysBel,
-  features: [FeatureType.WITH_RANGE, FeatureType.WITH_TASKS],
+  features: [FeatureType.WITH_RANGE, FeatureType.WITH_TASKS, FeatureType.WITH_DATE_LIMITS],
 };
 
 const builder = new Builder(config);
@@ -127,6 +127,7 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
           pointedDate={pointedDate}
           selectedDate={selectedDate}
           showWeekends={showWeekends}
+          showHolidays={showHolidays}
           weekStartsOn={weekStartsOn}
           holidays={calendar.config.holidays}
           onDateSelect={onDateSelect}

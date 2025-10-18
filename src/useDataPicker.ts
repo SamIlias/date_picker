@@ -32,11 +32,11 @@ export const useDataPicker = (calendar: ICalendar) => {
   };
 
   const onNextMonthClick = () => {
-    setPointedDate(calendar.nextMonthDay(pointedDate));
+    setPointedDate((prev) => calendar.nextMonthDay(prev));
   };
 
   const onPrevMonthClick = () => {
-    setPointedDate(calendar.prevMonthDay(pointedDate));
+    setPointedDate((prev) => calendar.prevMonthDay(prev));
   };
 
   const onYearSelect = (year: number) => {

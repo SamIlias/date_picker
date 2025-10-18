@@ -72,7 +72,7 @@ export const TasksModal: FC<TasksModalProps> = ({ date, calendar, onClose }) => 
             Add
           </S.AddButton>
         </S.NewTaskSection>
-        <S.ErrorMessage visible={!!errorMessage}>{errorMessage}</S.ErrorMessage>
+        <S.ErrorMessage isVisible={!!errorMessage}>{errorMessage}</S.ErrorMessage>
       </S.Modal>
     </S.Overlay>
   );

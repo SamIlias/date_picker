@@ -7,7 +7,9 @@ import {
   weekDaysStartsSunday,
   WeekStartsOn,
 } from '@/core/constants';
+import { hasDateLimitsFeature } from '@/core/decorators/DateLimitsCalendarDecorator';
 import { hasRangeFeature } from '@/core/decorators/RangeCalendarDecorator';
+import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
@@ -20,6 +22,7 @@ interface CalendarProps {
   rangeEnd?: Date | null;
   weekStartsOn: WeekStartsOn;
   showWeekends: boolean;
+  showHolidays: boolean;
   holidays: Date[];
   onDateSelect: (date: Date) => void;
   openTasks: () => void;
@@ -35,6 +38,7 @@ export const WeeksCalendar: FC<CalendarProps> = ({
   rangeEnd,
   weekStartsOn,
   showWeekends,
+  showHolidays,
   onDateSelect,
   openTasks,
   onPrevMonth,
@@ -70,6 +74,7 @@ export const WeeksCalendar: FC<CalendarProps> = ({
             date={date}
             key={`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
             onClick={handleDateClick}
+            hasTasks={hasTasksFeature(calendar) && !!calendar.getTasks(date).length}
             onDoubleClick={openTasks}
             $isToday={calendar.isToday(date)}
             $isSelected={calendar.isSameDay(date, selectedDate)}
@@ -82,7 +87,8 @@ export const WeeksCalendar: FC<CalendarProps> = ({
             $isRangeEnd={calendar.isSameDay(date, rangeEnd)}
             $isOtherMonth={calendar.isOtherMonth(date, pointedDate)}
             $isWeekend={showWeekends && calendar.isWeekend(date)}
-            $isHoliday={calendar.isHoliday(date, holidays)}
+            $isHoliday={showHolidays && calendar.isHoliday(date, holidays)}
+            $isDateAllowed={hasDateLimitsFeature(calendar) && calendar.isDateAllowed(date)}
           />
         ))}
       </S.CalendarGrid>

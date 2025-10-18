@@ -53,15 +53,29 @@ export class BaseCalendar implements ICalendar {
   }
 
   public nextMonthDay(date: Date): Date {
-    const next = new Date(date);
-    next.setMonth(date.getMonth() + 1);
-    return next;
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    const nextMonth = (month + 1) % 12;
+    const yearOfNextMonth = month === 11 ? year + 1 : year;
+    const lastDayInNextMonth = new Date(yearOfNextMonth, nextMonth + 1, 0).getDate();
+
+    const safeDay = Math.min(day, lastDayInNextMonth);
+    return new Date(yearOfNextMonth, nextMonth, safeDay);
   }
 
   public prevMonthDay(date: Date): Date {
-    const next = new Date(date);
-    next.setMonth(date.getMonth() - 1);
-    return next;
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const day = date.getDate();
+
+    const prevMonth = (month + 11) % 12;
+    const yearOfPrevMonth = month === 0 ? year - 1 : year;
+    const lastDayInPrevMonth = new Date(yearOfPrevMonth, prevMonth + 1, 0).getDate();
+    const safeDay = Math.min(day, lastDayInPrevMonth);
+
+    return new Date(yearOfPrevMonth, prevMonth, safeDay);
   }
 
   public getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[][] {
