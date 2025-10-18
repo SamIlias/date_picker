@@ -55,6 +55,17 @@ export class Builder {
         }
         return undefined;
       },
+
+      has(target, prop) {
+        if (prop in target) return true;
+        let current = hasInnerCalendar(target) ? target.calendar : undefined;
+        while (current) {
+          if (hasCalendarProp(current, prop)) return true;
+          current = hasInnerCalendar(current) ? current.calendar : undefined;
+        }
+
+        return false;
+      },
     });
   }
 

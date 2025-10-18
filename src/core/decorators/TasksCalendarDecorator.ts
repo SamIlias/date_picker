@@ -81,17 +81,9 @@ export class TasksCalendarDecorator extends BaseCalendarDecorator {
 
 export function hasTasksFeature(calendar: ICalendar): calendar is TasksCalendarDecorator {
   return (
-    'isInRange' in calendar &&
-    typeof calendar.isInRange === 'function' &&
     'addTask' in calendar &&
     typeof calendar.addTask === 'function' &&
     'getTasks' in calendar &&
-    typeof calendar.getTasks === 'function' &&
-    'removeTask' in calendar &&
-    typeof calendar.removeTask === 'function' &&
-    'loadTasks' in calendar &&
-    typeof calendar.loadTasks === 'function' &&
-    'clearAllTasks' in calendar &&
-    typeof calendar.clearAllTasks === 'function'
+    typeof calendar.getTasks === 'function'
   );
 }
