@@ -1,11 +1,9 @@
-import { monthNames } from '@/core/constants';
+import { FeatureType, monthNames, Views, WeekStartsOn } from '@/core/constants';
 
-export type WeekStartsOn = 'monday' | 'sunday';
-export type ViewType = 'weeks' | 'months' | 'years';
 export type MonthNames = (typeof monthNames)[number];
 
 export interface CalendarConfig {
-  view: ViewType;
+  view: Views;
   weekStartsOn: WeekStartsOn;
   initialDate?: Date;
   minDate?: Date | null;
@@ -14,8 +12,6 @@ export interface CalendarConfig {
   holidays: Date[];
   features?: FeatureType[];
 }
-
-export type FeatureType = 'withTasks' | 'withRange' | 'withDateLimits';
 
 export type Task = {
   id: string;

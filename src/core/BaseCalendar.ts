@@ -1,15 +1,17 @@
-import { CalendarConfig, ICalendar, WeekStartsOn } from './types';
+import { FeatureType, Views, WeekStartsOn } from '@/core/constants';
+
+import { CalendarConfig, ICalendar } from './types';
 import * as u from './utils';
 
 const defaultCalendarConfig: CalendarConfig = {
-  view: 'months',
-  weekStartsOn: 'monday',
+  view: Views.WEEKS,
+  weekStartsOn: WeekStartsOn.MONDAY,
   initialDate: new Date(),
   minDate: null,
   maxDate: null,
   showWeekends: true,
   holidays: [],
-  features: ['withRange'],
+  features: [FeatureType.WITH_RANGE],
 };
 
 export class BaseCalendar implements ICalendar {

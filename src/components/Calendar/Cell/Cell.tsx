@@ -1,19 +1,19 @@
-import { FC } from 'react';
-
-import { MonthNames } from '@/core/types';
-
 import * as S from './styled';
 
-export interface CellProps {
-  value: number | MonthNames;
-  onClick: () => void;
+export interface CellProps<T> {
+  value: T;
+  onClick: (value: T) => void;
   $isCurrent: boolean;
 }
 
-export const Cell: FC<CellProps> = ({ value, onClick, $isCurrent }) => {
+export function Cell<T>({ value, onClick, $isCurrent }: CellProps<T>) {
+  const handleClick = () => {
+    onClick(value);
+  };
+
   return (
-    <S.Cell onClick={onClick} $isCurrent={$isCurrent}>
-      {value}
+    <S.Cell onClick={handleClick} $isCurrent={$isCurrent}>
+      {String(value)}
     </S.Cell>
   );
-};
+}

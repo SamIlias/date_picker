@@ -9,5 +9,5 @@ export class RangeCalendarDecorator extends BaseCalendarDecorator {
 }
 
 export function hasRangeFeature(calendar: ICalendar): calendar is RangeCalendarDecorator {
-  return typeof (calendar as RangeCalendarDecorator).isInRange === 'function';
+  return 'isInRange' in calendar && typeof calendar.isInRange === 'function';
 }

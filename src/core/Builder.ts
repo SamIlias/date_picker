@@ -1,12 +1,22 @@
+import { FeatureType } from '@/core/constants';
+
 import { BaseCalendar } from './BaseCalendar';
 import { DateLimitsCalendarDecorator } from './decorators/DateLimitsCalendarDecorator';
 import { RangeCalendarDecorator } from './decorators/RangeCalendarDecorator';
 import { TasksCalendarDecorator } from './decorators/TasksCalendarDecorator';
-import { CalendarConfig, FeatureType, ICalendar } from './types';
+import { CalendarConfig, ICalendar } from './types';
 
 interface ICalendarWithDecorator extends ICalendar {
   calendar?: ICalendar;
-};
+}
+
+function hasInnerCalendar(obj: ICalendar): obj is ICalendarWithDecorator {
+  return 'calendar' in obj;
+}
+
+function hasCalendarProp(obj: object, prop: PropertyKey): prop is keyof ICalendar {
+  return typeof prop === 'string' && prop in obj;
+}
 
 type CalendarDecoratorClass = new (calendar: ICalendar) => ICalendar;
 
@@ -35,13 +45,13 @@ export class Builder {
     return new Proxy(calendar, {
       get(target, prop, receiver) {
         if (prop in target) return Reflect.get(target, prop, receiver);
-        let current = (target as ICalendarWithDecorator).calendar;
+        let current = hasInnerCalendar(target) ? target.calendar : undefined;
         while (current) {
-          if (prop in current) {
-            const value = current[prop as keyof ICalendar];
+          if (hasCalendarProp(current, prop)) {
+            const value = current[prop];
             return typeof value === 'function' ? value.bind(current) : value;
           }
-          current = (current as ICalendarWithDecorator).calendar;
+          current = hasInnerCalendar(current) ? current.calendar : undefined;
         }
         return undefined;
       },

@@ -1,4 +1,4 @@
-import { WeekStartsOn } from '../types';
+import { WeekStartsOn } from '@/core/constants';
 
 export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[][] {
   const year = currentDate.getFullYear();
@@ -9,7 +9,7 @@ export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsO
 
   const getWeekDay = (date: Date): number => {
     const day = date.getDay();
-    return weekStartsOn === 'monday' ? (day === 0 ? 7 : day) : day + 1;
+    return weekStartsOn === WeekStartsOn.MONDAY ? (day === 0 ? 7 : day) : day + 1;
   };
 
   const firstWeekDay = getWeekDay(firstDayOfMonth);
@@ -51,7 +51,7 @@ export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsO
 
 export function getDaysForWeekGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[] {
   const day = currentDate.getDay();
-  const diff = weekStartsOn === 'monday' ? (day === 0 ? -6 : 1 - day) : -day;
+  const diff = weekStartsOn === WeekStartsOn.MONDAY ? (day === 0 ? -6 : 1 - day) : -day;
 
   const start = new Date(currentDate);
   start.setDate(currentDate.getDate() + diff);

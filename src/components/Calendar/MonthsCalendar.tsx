@@ -19,11 +19,11 @@ export const MonthsCalendar: FC<MonthCalendarProps> = ({ currentMonth, onMonthSe
       </S.CalendarHeader>
 
       <S.MonthsCalendarGrid>
-        {monthNames.map((month, index) => (
+        {monthNames.map((month) => (
           <Cell
             value={month}
-            key={index}
-            onClick={() => onMonthSelect(month)}
+            key={month}
+            onClick={onMonthSelect}
             $isCurrent={currentMonth === month}
           />
         ))}

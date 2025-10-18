@@ -1,4 +1,6 @@
-import { ICalendar, WeekStartsOn } from '../types';
+import { WeekStartsOn } from '@/core/constants';
+
+import { ICalendar } from '../types';
 
 export class BaseCalendarDecorator implements ICalendar {
   protected calendar: ICalendar;

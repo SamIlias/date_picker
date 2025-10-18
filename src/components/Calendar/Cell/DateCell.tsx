@@ -2,9 +2,10 @@ import { FC } from 'react';
 
 import * as S from './styled';
 
-export interface CellProps {
+export interface DateCellProps {
   date: Date;
-  onClick: () => void;
+  onClick: (date: Date) => void;
+  onDoubleClick: () => void;
   $isToday?: boolean;
   $isSelected?: boolean;
   $isInRange?: boolean;
@@ -15,9 +16,10 @@ export interface CellProps {
   $isHoliday?: boolean;
 }
 
-export const DateCell: FC<CellProps> = ({
+export const DateCell: FC<DateCellProps> = ({
   date,
   onClick,
+  onDoubleClick,
   $isToday,
   $isSelected,
   $isInRange,
@@ -27,9 +29,13 @@ export const DateCell: FC<CellProps> = ({
   $isWeekend,
   $isHoliday,
 }) => {
+  const onCellClick = () => {
+    onClick(date);
+  };
   return (
     <S.DateCell
-      onClick={onClick}
+      onDoubleClick={onDoubleClick}
+      onClick={onCellClick}
       $isToday={$isToday}
       $isSelected={$isSelected}
       $isInRange={$isInRange}

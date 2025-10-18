@@ -1,9 +1,14 @@
 import { FC } from 'react';
 
 import { DateCell } from '@/components/Calendar/Cell/DateCell';
-import { monthNames, weekDaysStartsMonday, weekDaysStartsSunday } from '@/core/constants';
+import {
+  monthNames,
+  weekDaysStartsMonday,
+  weekDaysStartsSunday,
+  WeekStartsOn,
+} from '@/core/constants';
 import { hasRangeFeature } from '@/core/decorators/RangeCalendarDecorator';
-import { ICalendar, WeekStartsOn } from '@/core/types';
+import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
 
@@ -17,6 +22,7 @@ interface CalendarProps {
   showWeekends: boolean;
   holidays: Date[];
   onDateSelect: (date: Date) => void;
+  openTasks: () => void;
   onPrevMonth: () => void;
   onNextMonth: () => void;
 }
@@ -30,13 +36,19 @@ export const WeeksCalendar: FC<CalendarProps> = ({
   weekStartsOn,
   showWeekends,
   onDateSelect,
+  openTasks,
   onPrevMonth,
   onNextMonth,
 }) => {
-  const weekDays = weekStartsOn === 'monday' ? weekDaysStartsMonday : weekDaysStartsSunday;
+  const weekDays =
+    weekStartsOn === WeekStartsOn.MONDAY ? weekDaysStartsMonday : weekDaysStartsSunday;
   const calendarDays = calendar.getDaysForMonthGrid(pointedDate, weekStartsOn);
 
   const holidays = calendar.config.holidays;
+
+  const handleDateClick = (date: Date) => {
+    onDateSelect(date);
+  };
 
   return (
     <S.Calendar>
@@ -53,11 +65,12 @@ export const WeeksCalendar: FC<CalendarProps> = ({
           <S.WeekDayHeader key={day}>{day}</S.WeekDayHeader>
         ))}
 
-        {calendarDays.flat().map((date, index) => (
+        {calendarDays.flat().map((date) => (
           <DateCell
             date={date}
-            key={index}
-            onClick={() => onDateSelect(date)}
+            key={`${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`}
+            onClick={handleDateClick}
+            onDoubleClick={openTasks}
             $isToday={calendar.isToday(date)}
             $isSelected={calendar.isSameDay(date, selectedDate)}
             $isInRange={

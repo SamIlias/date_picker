@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { monthNames } from '@/core/constants';
+import { monthNames, Views } from '@/core/constants';
 import { ICalendar, MonthNames } from '@/core/types';
 
 export const useDataPicker = (calendar: ICalendar) => {
@@ -20,8 +20,8 @@ export const useDataPicker = (calendar: ICalendar) => {
   const [pointedYear, setPointedYear] = useState(pointedDate.getFullYear());
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openTasksModal = () => setIsModalOpen(true);
+  const closeTasksModal = () => setIsModalOpen(false);
 
   const onNextYearClick = () => {
     setPointedYear((prevYear) => prevYear + 1);
@@ -41,14 +41,14 @@ export const useDataPicker = (calendar: ICalendar) => {
 
   const onYearSelect = (year: number) => {
     setSelectedYear(year);
-    setView('months');
+    setView(Views.MONTHS);
   };
 
   const onMonthSelect = (month: MonthNames) => {
     const monthIndex = monthNames.indexOf(month);
     const newCurrentDate = new Date(selectedYear, monthIndex, currentDate.getDate());
     setPointedDate(newCurrentDate);
-    setView('weeks');
+    setView(Views.WEEKS);
   };
 
   const onDateInputPick = (value: string) => {
@@ -79,7 +79,6 @@ export const useDataPicker = (calendar: ICalendar) => {
 
   const onDateSelect = (date: Date) => {
     setSelectedDate(date);
-    openModal();
   };
 
   return {
@@ -109,7 +108,7 @@ export const useDataPicker = (calendar: ICalendar) => {
     onMonthSelect,
     pointedDate,
     isModalOpen,
-    openModal,
-    closeModal,
+    openTasksModal,
+    closeTasksModal,
   };
 };

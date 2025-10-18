@@ -11,7 +11,7 @@ interface YearCalendarProps {
   calendar: ICalendar;
   pointedYear: number;
   currentYear: number;
-  onYearSelect: (year: number) => void;
+  onYearSelect: (value: number) => void;
   onPrev: () => void;
   onNext: () => void;
 }
@@ -35,13 +35,8 @@ export const YearsCalendar: FC<YearCalendarProps> = ({
       </S.CalendarHeader>
 
       <S.CalendarGrid>
-        {calendarData.map((year, index) => (
-          <Cell
-            value={year}
-            key={index}
-            onClick={() => onYearSelect(year)}
-            $isCurrent={currentYear === year}
-          />
+        {calendarData.map((year) => (
+          <Cell value={year} key={year} onClick={onYearSelect} $isCurrent={currentYear === year} />
         ))}
       </S.CalendarGrid>
     </S.Calendar>

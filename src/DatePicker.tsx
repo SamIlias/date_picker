@@ -10,7 +10,13 @@ import { Settings } from '@/components/ControlPanel/Settings';
 import { TasksModal } from '@/components/TasksModal';
 import { DarkModeProvider, useDarkMode } from '@/context/darkModeContext';
 import { Builder } from '@/core/Builder';
-import { formatDateForInput, holidaysBel } from '@/core/constants';
+import {
+  FeatureType,
+  formatDateForInput,
+  holidaysBel,
+  Views,
+  WeekStartsOn,
+} from '@/core/constants';
 import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { CalendarConfig, ICalendar } from '@/core/types';
 import { darkTheme, lightTheme } from '@/theme/theme';
@@ -19,22 +25,18 @@ import { useDataPicker } from '@/useDataPicker';
 import { ControlPanel } from './components/ControlPanel';
 
 const config: CalendarConfig = {
-  view: 'weeks',
-  weekStartsOn: 'monday',
+  view: Views.WEEKS,
+  weekStartsOn: WeekStartsOn.MONDAY,
   initialDate: new Date(),
   minDate: null,
   maxDate: null,
   showWeekends: true,
   holidays: holidaysBel,
-  features: ['withRange', 'withTasks'],
+  features: [FeatureType.WITH_RANGE, FeatureType.WITH_TASKS],
 };
 
 const builder = new Builder(config);
 const calendar = builder.createCalendar();
-
-console.log('isInRange' in calendar);
-console.log('addTask' in calendar);
-console.log(calendar);
 
 export const DatePicker: FC = () => {
   return (
@@ -74,7 +76,8 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
     onMonthSelect,
     pointedDate,
     isModalOpen,
-    closeModal,
+    openTasksModal,
+    closeTasksModal,
   } = useDataPicker(calendar);
 
   return (
@@ -103,7 +106,7 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
         />
       </ControlPanel>
 
-      {view === 'years' && (
+      {view === Views.YEARS && (
         <YearsCalendar
           calendar={calendar}
           pointedYear={pointedYear}
@@ -114,11 +117,11 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
         />
       )}
 
-      {view === 'months' && (
+      {view === Views.MONTHS && (
         <MonthsCalendar currentMonth={currentMonth} onMonthSelect={onMonthSelect} />
       )}
 
-      {view === 'weeks' && (
+      {view === Views.WEEKS && (
         <WeeksCalendar
           calendar={calendar}
           pointedDate={pointedDate}
@@ -127,6 +130,7 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
           weekStartsOn={weekStartsOn}
           holidays={calendar.config.holidays}
           onDateSelect={onDateSelect}
+          openTasks={openTasksModal}
           onNextMonth={onNextMonthClick}
           onPrevMonth={onPrevMonthClick}
           rangeEnd={rangeEnd}
@@ -135,7 +139,7 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
       )}
 
       {isModalOpen && hasTasksFeature(calendar) && (
-        <TasksModal date={selectedDate} calendar={calendar} onClose={closeModal} />
+        <TasksModal date={selectedDate} calendar={calendar} onClose={closeTasksModal} />
       )}
     </ThemeProvider>
   );

@@ -36,3 +36,28 @@ export const holidaysBel: Date[] = [
   new Date(2025, 10, 7),
   new Date(2025, 11, 25),
 ];
+
+export enum Views {
+  WEEKS = 'weeks',
+  MONTHS = 'months',
+  YEARS = 'years',
+}
+
+export function isView(value: string): value is Views {
+  return Object.values(Views).some((v) => v === value);
+}
+
+export enum WeekStartsOn {
+  MONDAY = 'monday',
+  SUNDAY = 'sunday',
+}
+
+export function isWeekStartsOn(value: string): value is WeekStartsOn {
+  return Object.values(WeekStartsOn).some((v) => v === value);
+}
+
+export enum FeatureType {
+  WITH_TASKS = 'withTasks',
+  WITH_RANGE = 'withRange',
+  WITH_DATE_LIMITS = 'withDateLimits',
+}

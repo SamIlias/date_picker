@@ -1,25 +1,16 @@
 import styled, { css } from 'styled-components';
 
+import { CellProps } from '@/components/Calendar/Cell/Cell';
+import { DateCellProps } from '@/components/Calendar/Cell/DateCell';
+
 const TRANSITION_DURATION = '0.2s';
 const CELL_MIN_HEIGHT = '40px';
 const CELL_MIN_HEIGHT_MOBILE = '32px';
 
-interface DateCellProps {
-  $isToday?: boolean;
-  $isSelected?: boolean;
-  $isInRange?: boolean;
-  $isRangeStart?: boolean;
-  $isRangeEnd?: boolean;
-  $isOtherMonth?: boolean;
-  $isWeekend?: boolean;
-  $isHoliday?: boolean;
-}
+type DateCellPropsForStyles = Omit<DateCellProps, 'date' | 'onDoubleClick' | 'onClick'>;
+type CellPropsForStyles = Pick<CellProps, '$isCurrent'>;
 
-interface CellProps {
-  $isCurrent?: boolean;
-}
-
-export const DateCell = styled.div<DateCellProps>`
+export const DateCell = styled.div<DateCellPropsForStyles>`
   ${({
     theme,
     $isOtherMonth,
@@ -112,7 +103,7 @@ export const DateCell = styled.div<DateCellProps>`
   `}
 `;
 
-export const Cell = styled.div<CellProps>`
+export const Cell = styled.div<CellPropsForStyles>`
   ${({ theme, $isCurrent }) => css`
     padding: ${theme.spacing.sm};
     text-align: center;
