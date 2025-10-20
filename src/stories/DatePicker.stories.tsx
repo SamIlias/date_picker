@@ -1,14 +1,14 @@
 import { Meta, StoryObj } from '@storybook/react-webpack5';
 
-import { DatePicker } from '@';
+import { Example } from '@/ExamplePicker';
 
-const meta: Meta<typeof DatePicker> = {
+const meta: Meta<typeof Example> = {
   title: 'Components/DatePicker',
-  component: DatePicker,
+  component: Example,
 };
 export default meta;
 
-type Story = StoryObj<typeof DatePicker>;
+type Story = StoryObj<typeof Example>;
 
 export const Default: Story = {
   args: {

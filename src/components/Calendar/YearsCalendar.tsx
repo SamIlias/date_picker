@@ -4,6 +4,7 @@ import { Cell } from '@/components/Calendar/Cell/Cell';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
+import { NextButton, PrevButton } from '@/components/Buttons';
 
 const DEFAULT_YEAR_COUNT = 7;
 
@@ -29,9 +30,9 @@ export const YearsCalendar: FC<YearCalendarProps> = ({
   return (
     <S.Calendar>
       <S.CalendarHeader>
-        <S.HeaderButton onClick={onPrev}>{'<<'}</S.HeaderButton>
+        <PrevButton onClick={onPrev} />
         <S.HeaderTitle>{'Years'}</S.HeaderTitle>
-        <S.HeaderButton onClick={onNext}>{'>>'}</S.HeaderButton>
+        <NextButton onClick={onNext} />
       </S.CalendarHeader>
 
       <S.CalendarGrid>

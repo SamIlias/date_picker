@@ -3,6 +3,7 @@ import { FC } from 'react';
 import { DateCell } from '@/components/Calendar/Cell/DateCell';
 import {
   monthNames,
+  Views,
   weekDaysStartsMonday,
   weekDaysStartsSunday,
   WeekStartsOn,
@@ -13,6 +14,7 @@ import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
+import { NextButton, PrevButton } from '@/components/Buttons';
 
 interface CalendarProps {
   calendar: ICalendar;
@@ -28,6 +30,7 @@ interface CalendarProps {
   openTasks: () => void;
   onPrevMonth: () => void;
   onNextMonth: () => void;
+  onViewChange: (view: Views) => void;
 }
 
 export const WeeksCalendar: FC<CalendarProps> = ({
@@ -43,6 +46,7 @@ export const WeeksCalendar: FC<CalendarProps> = ({
   openTasks,
   onPrevMonth,
   onNextMonth,
+  onViewChange,
 }) => {
   const weekDays =
     weekStartsOn === WeekStartsOn.MONDAY ? weekDaysStartsMonday : weekDaysStartsSunday;
@@ -54,14 +58,18 @@ export const WeeksCalendar: FC<CalendarProps> = ({
     onDateSelect(date);
   };
 
+  const handleMonthClick = () => {
+    onViewChange(Views.MONTHS);
+  };
+
   return (
     <S.Calendar>
       <S.CalendarHeader>
-        <S.HeaderButton onClick={onPrevMonth}>{'<<'}</S.HeaderButton>
-        <S.HeaderTitle>
+        <PrevButton onClick={onPrevMonth} />
+        <S.HeaderTitle $isClickable={true} onClick={handleMonthClick}>
           {monthNames[pointedDate.getMonth()]} {pointedDate.getFullYear()}
         </S.HeaderTitle>
-        <S.HeaderButton onClick={onNextMonth}>{'>>'}</S.HeaderButton>
+        <NextButton onClick={onNextMonth} />
       </S.CalendarHeader>
 
       <S.CalendarGrid>
@@ -88,7 +96,7 @@ export const WeeksCalendar: FC<CalendarProps> = ({
             $isOtherMonth={calendar.isOtherMonth(date, pointedDate)}
             $isWeekend={showWeekends && calendar.isWeekend(date)}
             $isHoliday={showHolidays && calendar.isHoliday(date, holidays)}
-            $isDateAllowed={hasDateLimitsFeature(calendar) && calendar.isDateAllowed(date)}
+            $isDateAllowed={hasDateLimitsFeature(calendar) ? calendar.isDateAllowed(date) : true}
           />
         ))}
       </S.CalendarGrid>

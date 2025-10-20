@@ -3,7 +3,11 @@ import { useState } from 'react';
 import { monthNames, Views } from '@/core/constants';
 import { ICalendar, MonthNames } from '@/core/types';
 
-export const useDataPicker = (calendar: ICalendar) => {
+export const useDataPicker = (
+  calendar: ICalendar,
+  customDate?: Date,
+  customCallback?: (date: Date) => void,
+) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const currentMonth = monthNames[currentDate.getMonth()];
@@ -14,8 +18,8 @@ export const useDataPicker = (calendar: ICalendar) => {
   const [showHolidays, setShowHolidays] = useState(!!calendar.config.holidays.length);
   const [rangeStart, setRangeStart] = useState<Date | null>(null);
   const [rangeEnd, setRangeEnd] = useState<Date | null>(null);
-  const [pointedDate, setPointedDate] = useState(currentDate);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+  const [pointedDate, setPointedDate] = useState(customDate ?? currentDate);
+  const [selectedDate, setSelectedDate] = useState(customDate ?? new Date());
   const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
   const [pointedYear, setPointedYear] = useState(pointedDate.getFullYear());
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,9 +59,17 @@ export const useDataPicker = (calendar: ICalendar) => {
     const pickedDate = new Date(value);
     setSelectedDate(pickedDate);
     setPointedDate(pickedDate);
+    if (customCallback) {
+      customCallback(pickedDate);
+    }
   };
 
-  const onStartRangeInputPick = (value: string) => {
+  const onStartRangePick = (value: string | null) => {
+    if (!value) {
+      setRangeStart(null);
+      return;
+    }
+
     const pickedDate = new Date(value);
     if (rangeEnd && pickedDate > rangeEnd) {
       setRangeStart(rangeEnd);
@@ -67,7 +79,12 @@ export const useDataPicker = (calendar: ICalendar) => {
     }
   };
 
-  const onEndRangeInputPick = (value: string) => {
+  const onEndRangePick = (value: string | null) => {
+    if (!value) {
+      setRangeEnd(null);
+      return;
+    }
+
     const pickedDate = new Date(value);
     if (rangeStart && pickedDate < rangeStart) {
       setRangeEnd(rangeStart);
@@ -79,6 +96,10 @@ export const useDataPicker = (calendar: ICalendar) => {
 
   const onDateSelect = (date: Date) => {
     setSelectedDate(date);
+
+    if (customCallback) {
+      customCallback(date);
+    }
   };
 
   return {
@@ -92,12 +113,13 @@ export const useDataPicker = (calendar: ICalendar) => {
     setShowHolidays,
     rangeStart,
     rangeEnd,
-    onStartRangeInputPick,
-    onEndRangeInputPick,
+    onStartRangePick,
+    onEndRangePick,
     selectedDate,
     onDateSelect,
     onDateInputPick,
     pointedYear,
+    selectedYear,
     currentYear,
     onNextYearClick,
     onPrevYearClick,

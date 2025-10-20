@@ -4,8 +4,8 @@ import { CellProps } from '@/components/Calendar/Cell/Cell';
 import { DateCellProps } from '@/components/Calendar/Cell/DateCell';
 
 const TRANSITION_DURATION = '0.5s';
-const CELL_MIN_HEIGHT = '40px';
-const CELL_MIN_HEIGHT_MOBILE = '32px';
+const CELL_MIN_HEIGHT = '20px';
+const CELL_MIN_HEIGHT_MOBILE = '16px';
 
 type DateCellPropsForStyles = Omit<
   DateCellProps,
@@ -25,6 +25,12 @@ export const DateNumber = styled.div`
   display: flex;
   align-items: end;
   height: 70%;
+
+  ${({ theme }) => css`
+    @media ${theme.breakpoint.mobile} {
+      font-size: ${theme.fontSize.h4};
+    }
+  `}
 `;
 
 export const DateCell = styled.div<DateCellPropsForStyles>`
@@ -42,7 +48,7 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
   }) => css`
     padding: ${theme.spacing.sm};
     text-align: center;
-    border-radius: 0;
+    border-radius: ${theme.borderRadius.sm};
     cursor: pointer;
     font-size: ${theme.fontSize.h1};
     font-family: ${theme.fontFamily.primary};
@@ -134,18 +140,17 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
 export const Cell = styled.div<CellPropsForStyles>`
   ${({ theme, $isCurrent }) => css`
     padding: ${theme.spacing.sm};
-    text-align: center;
     border-radius: ${theme.borderRadius.sm};
     cursor: pointer;
     font-size: ${theme.fontSize.h3};
     font-family: ${theme.fontFamily.primary};
     font-weight: ${theme.fontWeight.regular};
     transition: all ${TRANSITION_DURATION};
-    aspect-ratio: 1;
     display: flex;
     align-items: center;
+    border: ${theme.borderThickness.thin} solid ${theme.color.border.plain};
     justify-content: center;
-    min-height: ${CELL_MIN_HEIGHT};
+    height: ${CELL_MIN_HEIGHT};
 
     background-color: ${() => {
       return theme.color.background.primary;
@@ -165,7 +170,6 @@ export const Cell = styled.div<CellPropsForStyles>`
 
   @media ${theme.breakpoint.mobile} {
     padding: ${theme.spacing.xs};
-    font-size: ${theme.fontSize.h5};
     min-height: ${CELL_MIN_HEIGHT_MOBILE};
   }
   `}

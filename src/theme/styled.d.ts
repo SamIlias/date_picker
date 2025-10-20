@@ -3,6 +3,10 @@ import 'styled-components';
 declare module 'styled-components' {
   export interface DefaultTheme {
     color: {
+      border: {
+        plain: string;
+        contrast: string;
+      };
       background: {
         primary: string;
         button: string;
@@ -23,6 +27,7 @@ declare module 'styled-components' {
         secondary: string;
         placeholder: string;
         ranged: string;
+        contrast: string;
       };
     };
     breakpoint: {

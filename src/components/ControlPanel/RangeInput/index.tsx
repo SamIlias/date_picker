@@ -1,29 +1,29 @@
-import { ChangeEvent, FC } from 'react';
+import { FC } from 'react';
+
+import { DateInput } from '@/components/ControlPanel/DateInput';
 
 import * as S from './styled';
 
 interface RangeInputProps {
   from?: string;
   to?: string;
-  onFromChange: (value: string) => void;
-  onToChange: (value: string) => void;
+  onFromChange: (value: string | null) => void;
+  onToChange: (value: string | null) => void;
 }
 
 export const RangeInput: FC<RangeInputProps> = ({ from, to, onFromChange, onToChange }) => {
-  const onFromChangeCallback = (e: ChangeEvent<HTMLInputElement>) => onFromChange(e.target.value);
-  const onToChangeCallback = (e: ChangeEvent<HTMLInputElement>) => onToChange(e.target.value);
+  const handleClear = () => {
+    onFromChange(null);
+    onToChange(null);
+  };
 
   return (
     <S.RangeInput>
-      <S.DateInputGroup>
-        <S.Label htmlFor="from-date">From</S.Label>
-        <S.DateInputField type="date" id="from-date" value={from} onChange={onFromChangeCallback} />
-      </S.DateInputGroup>
-
-      <S.DateInputGroup>
-        <S.Label htmlFor="to-date">To</S.Label>
-        <S.DateInputField id="to-date" value={to} onChange={onToChangeCallback} />
-      </S.DateInputGroup>
+      <DateInput value={from} onChange={onFromChange} htmlFor={'from-date'} label={'From'} />
+      <DateInput value={to} onChange={onToChange} htmlFor={'to-date'} label={'To'} />
+      <S.ClearButton onClick={handleClear} disabled={!from && !to}>
+        {'Clear'}
+      </S.ClearButton>
     </S.RangeInput>
   );
 };

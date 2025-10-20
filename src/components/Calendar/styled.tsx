@@ -1,9 +1,6 @@
 import styled, { css } from 'styled-components';
 
-const TRANSITION_DURATION = '0.2s';
 const SHADOW = '0 2px 8px rgba(0, 0, 0, 0.1)';
-const HEADER_BUTTON_MIN_WIDTH = '40px';
-const HEADER_BUTTON_MIN_WIDTH_MOBILE = '60px';
 
 export const Calendar = styled.div`
   ${({ theme }) => css`
@@ -23,49 +20,23 @@ export const CalendarHeader = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: ${theme.spacing.md};
     gap: ${theme.spacing.base};
   `}
 `;
 
-export const HeaderButton = styled.button`
-  ${({ theme }) => css`
-    padding: ${theme.spacing.sm} ${theme.spacing.base};
-    border: none;
-    background-color: ${theme.color.background.primary};
-    color: ${theme.color.text.primary};
-    font-size: ${theme.fontSize.h1};
-    font-weight: ${theme.fontWeight.bold};
-    font-family: ${theme.fontFamily.primary};
-    cursor: pointer;
-    transition: all ${TRANSITION_DURATION};
-    min-width: ${HEADER_BUTTON_MIN_WIDTH};
+interface HeaderTitleProps {
+  $isClickable?: boolean;
+}
 
-    &:hover {
-      background-color: ${theme.color.background.onCellHover};
-      border-color: ${theme.color.text.secondary};
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    @media ${theme.breakpoint.mobile} {
-      min-width: ${HEADER_BUTTON_MIN_WIDTH_MOBILE};
-      padding: ${theme.spacing.xs} ${theme.spacing.sm};
-      font-size: ${theme.fontSize.small};
-    }
-  `}
-`;
-
-export const HeaderTitle = styled.h2`
-  ${({ theme }) => css`
+export const HeaderTitle = styled.h2<HeaderTitleProps>`
+  ${({ theme, $isClickable = false }) => css`
     font-size: ${theme.fontSize.h2};
     font-weight: ${theme.fontWeight.semibold};
     color: ${theme.color.text.primary};
     font-family: ${theme.fontFamily.primary};
     text-align: center;
     flex: 1;
+    cursor: ${$isClickable ? 'pointer' : 'auto'};
 
     @media ${theme.breakpoint.mobile} {
       font-size: ${theme.fontSize.h3};
@@ -108,7 +79,7 @@ export const WeekDayHeader = styled.div`
 
     @media ${theme.breakpoint.mobile} {
       padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.h3};
+      font-size: ${theme.fontSize.h4};
     }
   `}
 `;

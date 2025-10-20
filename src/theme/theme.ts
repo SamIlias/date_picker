@@ -2,15 +2,19 @@ import { DefaultTheme } from 'styled-components';
 
 const baseTheme: DefaultTheme = {
   color: {
+    border: {
+      plain: '#cecece',
+      contrast: '#151414',
+    },
     background: {
       primary: '#ffffff',
-      button: '#3199da',
+      button: '#6da8f5',
       activeCell: '#2F80ED',
       onCellHover: '#F1F1F1',
       range: '#2F80ED1A',
       rangeStartCell: '#2F80ED99',
       rangeEndCell: '#2F80ED',
-      disabled: 'rgba(241,178,178,0.47)',
+      disabled: '#837A7677',
     },
     red: {
       main: '#FF3333',
@@ -20,8 +24,9 @@ const baseTheme: DefaultTheme = {
     text: {
       primary: '#000000',
       secondary: '#444444',
-      placeholder: '#888888',
+      placeholder: '#a1a1a1',
       ranged: '#2F80ED',
+      contrast: '#ffffff',
     },
   },
   breakpoint: {
@@ -88,6 +93,10 @@ export const darkTheme: DefaultTheme = {
   ...baseTheme,
   color: {
     ...baseTheme.color,
+    border: {
+      plain: '#4f4e4e',
+      contrast: '#d2d0d0',
+    },
     background: {
       primary: '#131313',
       button: '#3a626c',
@@ -103,6 +112,7 @@ export const darkTheme: DefaultTheme = {
       secondary: '#666666',
       placeholder: '#888888',
       ranged: '#2F80ED',
+      contrast: '#000000',
     },
   },
 };

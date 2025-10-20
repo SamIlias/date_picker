@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { buttonBaseStyles } from '../commonStyles';
+
 const MODAL_MAX_WIDTH = '400px';
 const MODAL_Z_INDEX = 1000;
 
@@ -127,31 +129,7 @@ export const TaskInput = styled.input`
 `;
 
 export const AddButton = styled.button`
-  ${({ theme }) => css`
-    background: ${theme.color.background.button};
-    color: ${theme.color.text.primary};
-    border: none;
-    border-radius: ${theme.borderRadius.sm};
-    padding: ${theme.spacing.sm} ${theme.spacing.base};
-    cursor: pointer;
-    font-weight: ${theme.fontWeight.medium};
-
-    &:hover {
-      background: ${theme.color.text.ranged};
-    }
-
-    &:active {
-      transform: scale(0.98);
-    }
-
-    &:disabled {
-      background: ${theme.color.background.disabled};
-      color: ${theme.color.text.secondary};
-      cursor: not-allowed;
-      opacity: 0.6;
-      transform: none;
-    }
-  `}
+  ${buttonBaseStyles}
 `;
 
 export const ErrorMessage = styled.p<{ isVisible?: boolean }>`

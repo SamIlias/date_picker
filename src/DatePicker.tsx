@@ -4,49 +4,31 @@ import { ThemeProvider } from 'styled-components';
 import { MonthsCalendar } from '@/components/Calendar/MonthsCalendar';
 import { WeeksCalendar } from '@/components/Calendar/WeeksCalendar';
 import { YearsCalendar } from '@/components/Calendar/YearsCalendar';
-import { DateInput } from '@/components/ControlPanel/DateInput';
-import { RangeInput } from '@/components/ControlPanel/RangeInput';
-import { Settings } from '@/components/ControlPanel/Settings';
 import { TasksModal } from '@/components/TasksModal';
 import { DarkModeProvider, useDarkMode } from '@/context/darkModeContext';
-import { Builder } from '@/core/Builder';
-import {
-  FeatureType,
-  formatDateForInput,
-  holidaysBel,
-  Views,
-  WeekStartsOn,
-} from '@/core/constants';
+import { formatDateForInput, Views } from '@/core/constants';
 import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
-import { CalendarConfig, ICalendar } from '@/core/types';
+import { ICalendar } from '@/core/types';
 import { darkTheme, lightTheme } from '@/theme/theme';
 import { useDataPicker } from '@/useDataPicker';
 
 import { ControlPanel } from './components/ControlPanel';
 
-const config: CalendarConfig = {
-  view: Views.WEEKS,
-  weekStartsOn: WeekStartsOn.MONDAY,
-  initialDate: new Date(),
-  minDate: new Date(2025, 3, 10),
-  maxDate: new Date(2025, 11, 9),
-  showWeekends: true,
-  holidays: holidaysBel,
-  features: [FeatureType.WITH_RANGE, FeatureType.WITH_TASKS, FeatureType.WITH_DATE_LIMITS],
+export type DatePickerProps = {
+  calendar: ICalendar;
+  customDate: Date;
+  customCallback: (date: Date) => void;
 };
 
-const builder = new Builder(config);
-const calendar = builder.createCalendar();
-
-export const DatePicker: FC = () => {
+export const DatePicker: FC<DatePickerProps> = ({ calendar, customDate, customCallback }) => {
   return (
     <DarkModeProvider>
-      <MainComponent calendar={calendar} />
+      <MainComponent calendar={calendar} customDate={customDate} customCallback={customCallback} />
     </DarkModeProvider>
   );
 };
 
-const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
+export const MainComponent: FC<DatePickerProps> = ({ calendar, customDate, customCallback }) => {
   const { isDark } = useDarkMode();
 
   const {
@@ -60,12 +42,13 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
     setShowHolidays,
     rangeStart,
     rangeEnd,
-    onStartRangeInputPick,
-    onEndRangeInputPick,
+    onStartRangePick,
+    onEndRangePick,
     selectedDate,
     onDateSelect,
     onDateInputPick,
     pointedYear,
+    selectedYear,
     currentYear,
     onNextYearClick,
     onPrevYearClick,
@@ -78,33 +61,26 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
     isModalOpen,
     openTasksModal,
     closeTasksModal,
-  } = useDataPicker(calendar);
+  } = useDataPicker(calendar, customDate, customCallback);
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <ControlPanel>
-        <Settings
-          view={view}
-          onViewChange={setView}
-          weekStartsOn={weekStartsOn}
-          onWeekStartsOnChange={setWeekStartsOn}
-          showWeekends={showWeekends}
-          onShowWeekendsChange={setShowWeekends}
-          showHolidays={showHolidays}
-          onShowHolidaysChange={setShowHolidays}
-        />
-        <RangeInput
-          from={formatDateForInput(rangeStart)}
-          to={formatDateForInput(rangeEnd)}
-          onFromChange={onStartRangeInputPick}
-          onToChange={onEndRangeInputPick}
-        />
-        <DateInput
-          value={formatDateForInput(selectedDate)}
-          onChange={onDateInputPick}
-          label={'Select date'}
-        />
-      </ControlPanel>
+      <ControlPanel
+        view={view}
+        onViewChange={setView}
+        weekStartsOn={weekStartsOn}
+        onWeekStartsOnChange={setWeekStartsOn}
+        showWeekends={showWeekends}
+        onShowWeekendsChange={setShowWeekends}
+        showHolidays={showHolidays}
+        onShowHolidaysChange={setShowHolidays}
+        from={formatDateForInput(rangeStart)}
+        to={formatDateForInput(rangeEnd)}
+        onFromChange={onStartRangePick}
+        onToChange={onEndRangePick}
+        selectedDate={selectedDate}
+        onDateInputPick={onDateInputPick}
+      />
 
       {view === Views.YEARS && (
         <YearsCalendar
@@ -118,12 +94,18 @@ const MainComponent: FC<{ calendar: ICalendar }> = ({ calendar }) => {
       )}
 
       {view === Views.MONTHS && (
-        <MonthsCalendar currentMonth={currentMonth} onMonthSelect={onMonthSelect} />
+        <MonthsCalendar
+          currentMonth={currentMonth}
+          selectedYear={selectedYear}
+          onMonthSelect={onMonthSelect}
+          onViewChange={setView}
+        />
       )}
 
       {view === Views.WEEKS && (
         <WeeksCalendar
           calendar={calendar}
+          onViewChange={setView}
           pointedDate={pointedDate}
           selectedDate={selectedDate}
           showWeekends={showWeekends}

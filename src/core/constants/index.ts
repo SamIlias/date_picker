@@ -24,7 +24,7 @@ export const formatDateForInput = (date: Date | null) => {
   return `${year}-${month}-${day}`;
 };
 
-export const holidaysBel: Date[] = [
+export const holidaysBelarus: Date[] = [
   new Date(2025, 0, 1),
   new Date(2025, 0, 2),
   new Date(2025, 0, 7),
