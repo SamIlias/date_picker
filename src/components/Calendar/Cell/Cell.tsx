@@ -1,0 +1,19 @@
+import * as S from './styled';
+
+export interface CellProps<T> {
+  value: T;
+  onClick: (value: T) => void;
+  $isCurrent: boolean;
+}
+
+export function Cell<T>({ value, onClick, $isCurrent }: CellProps<T>) {
+  const handleClick = () => {
+    onClick(value);
+  };
+
+  return (
+    <S.Cell onClick={handleClick} $isCurrent={$isCurrent}>
+      {String(value)}
+    </S.Cell>
+  );
+}

@@ -14,8 +14,9 @@
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
+      "@": ["src"],
       "@/*": ["src/*"]
     },
     "typeRoots": ["./node_modules/@types"],
