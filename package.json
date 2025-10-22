@@ -14,7 +14,7 @@
     "format": "prettier --write 'src/**/*.{ts,tsx,json,css,md}'",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "build-storybook -o storybook-static",
+    "build-storybook": "storybook build",
     "prepare": "husky install",
     "chromatic": "dotenv -e .env -- npx chromatic --project-token=$CHROMATIC_PROJECT_TOKEN"
   },
