@@ -1,10 +1,10 @@
 import { FC } from 'react';
 
+import { NextButton, PrevButton } from '@/components/Buttons';
 import { Cell } from '@/components/Calendar/Cell/Cell';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
-import { NextButton, PrevButton } from '@/components/Buttons';
 
 const DEFAULT_YEAR_COUNT = 7;
 
@@ -26,7 +26,6 @@ export const YearsCalendar: FC<YearCalendarProps> = ({
   onNext,
 }) => {
   const calendarData = calendar.getYearsForGrid(pointedYear, DEFAULT_YEAR_COUNT);
-
   return (
     <S.Calendar>
       <S.CalendarHeader>

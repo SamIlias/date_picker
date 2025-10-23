@@ -49,23 +49,6 @@ export function getDaysForMonthGrid(currentDate: Date, weekStartsOn: WeekStartsO
   return weeks;
 }
 
-export function getDaysForWeekGrid(currentDate: Date, weekStartsOn: WeekStartsOn): Date[] {
-  const day = currentDate.getDay();
-  const diff = weekStartsOn === WeekStartsOn.MONDAY ? (day === 0 ? -6 : 1 - day) : -day;
-
-  const start = new Date(currentDate);
-  start.setDate(currentDate.getDate() + diff);
-
-  const week: Date[] = [];
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(start);
-    date.setDate(start.getDate() + i);
-    week.push(date);
-  }
-
-  return week;
-}
-
 export function getYearsForGrid(currentYear: number, count: number): number[] {
   const half = Math.floor(count / 2);
   return Array.from({ length: count }, (_, i) => currentYear - half + i);

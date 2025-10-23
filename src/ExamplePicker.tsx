@@ -22,11 +22,12 @@ const config: CalendarConfig = {
 const builder = new Builder(config);
 const calendar = builder.createCalendar();
 
-const customDate = new Date(2025, 11, 3);
-const customCallback = (date: Date) => {
-  console.log('Here the date for your application: ', date);
-};
-
 export const Example = () => {
+  const customDate = new Date(2025, 10, 3);
+
+  const customCallback = (date: Date) => {
+    console.log('Here the date for your application: ', date);
+  };
+
   return <DatePicker calendar={calendar} customDate={customDate} customCallback={customCallback} />;
 };

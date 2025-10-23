@@ -5,7 +5,7 @@ import { Task } from '@/core/types';
 
 import * as S from './styled';
 
-const TASK_LENGTH = 10;
+const TASK_LENGTH = 20;
 
 interface TasksModalProps {
   date: Date;

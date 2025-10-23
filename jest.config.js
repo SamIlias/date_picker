@@ -9,7 +9,7 @@ export default {
     ...tsJestTransformCfg,
     '^.+\\.tsx?$': 'ts-jest',
   },
-  collectCoverage: false,
+  collectCoverage: true,
   collectCoverageFrom: ['src/**/*.{ts,tsx}', '!src/**/*.d.ts'],
   coverageReporters: ['text', 'lcov'],
 

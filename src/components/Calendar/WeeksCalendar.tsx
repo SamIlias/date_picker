@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { NextButton, PrevButton } from '@/components/Buttons';
 import { DateCell } from '@/components/Calendar/Cell/DateCell';
 import {
   monthNames,
@@ -14,7 +15,6 @@ import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
-import { NextButton, PrevButton } from '@/components/Buttons';
 
 interface CalendarProps {
   calendar: ICalendar;

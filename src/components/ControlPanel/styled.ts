@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components';
 
+const MAX_HEIGHT = '600px';
+const HIDDEN_Y_POSITION = '-10px';
+
 export const ControlPanel = styled.div`
   display: flex;
   flex-direction: column;
@@ -40,12 +43,12 @@ export const AnimatedPanel = styled.div<{ $visible: boolean }>`
     $visible
       ? css`
           opacity: 1;
-          max-height: 500px; /* достаточно для содержимого */
+          max-height: ${MAX_HEIGHT};
           transform: translateY(0);
         `
       : css`
           opacity: 0;
           max-height: 0;
-          transform: translateY(-10px);
+          transform: translateY(${HIDDEN_Y_POSITION});
         `}
 `;

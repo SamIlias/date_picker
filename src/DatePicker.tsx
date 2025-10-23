@@ -4,6 +4,8 @@ import { ThemeProvider } from 'styled-components';
 import { MonthsCalendar } from '@/components/Calendar/MonthsCalendar';
 import { WeeksCalendar } from '@/components/Calendar/WeeksCalendar';
 import { YearsCalendar } from '@/components/Calendar/YearsCalendar';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { ErrorFallback } from '@/components/ErrorFallback';
 import { TasksModal } from '@/components/TasksModal';
 import { DarkModeProvider, useDarkMode } from '@/context/darkModeContext';
 import { formatDateForInput, Views } from '@/core/constants';
@@ -65,65 +67,67 @@ export const MainComponent: FC<DatePickerProps> = ({ calendar, customDate, custo
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
-      <ControlPanel
-        view={view}
-        onViewChange={setView}
-        weekStartsOn={weekStartsOn}
-        onWeekStartsOnChange={setWeekStartsOn}
-        showWeekends={showWeekends}
-        onShowWeekendsChange={setShowWeekends}
-        showHolidays={showHolidays}
-        onShowHolidaysChange={setShowHolidays}
-        from={formatDateForInput(rangeStart)}
-        to={formatDateForInput(rangeEnd)}
-        onFromChange={onStartRangePick}
-        onToChange={onEndRangePick}
-        selectedDate={selectedDate}
-        onDateInputPick={onDateInputPick}
-      />
-
-      {view === Views.YEARS && (
-        <YearsCalendar
-          calendar={calendar}
-          pointedYear={pointedYear}
-          currentYear={currentYear}
-          onNext={onNextYearClick}
-          onPrev={onPrevYearClick}
-          onYearSelect={onYearSelect}
-        />
-      )}
-
-      {view === Views.MONTHS && (
-        <MonthsCalendar
-          currentMonth={currentMonth}
-          selectedYear={selectedYear}
-          onMonthSelect={onMonthSelect}
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <ControlPanel
+          view={view}
           onViewChange={setView}
-        />
-      )}
-
-      {view === Views.WEEKS && (
-        <WeeksCalendar
-          calendar={calendar}
-          onViewChange={setView}
-          pointedDate={pointedDate}
-          selectedDate={selectedDate}
-          showWeekends={showWeekends}
-          showHolidays={showHolidays}
           weekStartsOn={weekStartsOn}
-          holidays={calendar.config.holidays}
-          onDateSelect={onDateSelect}
-          openTasks={openTasksModal}
-          onNextMonth={onNextMonthClick}
-          onPrevMonth={onPrevMonthClick}
-          rangeEnd={rangeEnd}
-          rangeStart={rangeStart}
+          onWeekStartsOnChange={setWeekStartsOn}
+          showWeekends={showWeekends}
+          onShowWeekendsChange={setShowWeekends}
+          showHolidays={showHolidays}
+          onShowHolidaysChange={setShowHolidays}
+          from={formatDateForInput(rangeStart)}
+          to={formatDateForInput(rangeEnd)}
+          onFromChange={onStartRangePick}
+          onToChange={onEndRangePick}
+          selectedDate={selectedDate}
+          onDateInputPick={onDateInputPick}
         />
-      )}
 
-      {isModalOpen && hasTasksFeature(calendar) && (
-        <TasksModal date={selectedDate} calendar={calendar} onClose={closeTasksModal} />
-      )}
+        {view === Views.YEARS && (
+          <YearsCalendar
+            calendar={calendar}
+            pointedYear={pointedYear}
+            currentYear={currentYear}
+            onNext={onNextYearClick}
+            onPrev={onPrevYearClick}
+            onYearSelect={onYearSelect}
+          />
+        )}
+
+        {view === Views.MONTHS && (
+          <MonthsCalendar
+            currentMonth={currentMonth}
+            selectedYear={selectedYear}
+            onMonthSelect={onMonthSelect}
+            onViewChange={setView}
+          />
+        )}
+
+        {view === Views.WEEKS && (
+          <WeeksCalendar
+            calendar={calendar}
+            onViewChange={setView}
+            pointedDate={pointedDate}
+            selectedDate={selectedDate}
+            showWeekends={showWeekends}
+            showHolidays={showHolidays}
+            weekStartsOn={weekStartsOn}
+            holidays={calendar.config.holidays}
+            onDateSelect={onDateSelect}
+            openTasks={openTasksModal}
+            onNextMonth={onNextMonthClick}
+            onPrevMonth={onPrevMonthClick}
+            rangeEnd={rangeEnd}
+            rangeStart={rangeStart}
+          />
+        )}
+
+        {isModalOpen && hasTasksFeature(calendar) && (
+          <TasksModal date={selectedDate} calendar={calendar} onClose={closeTasksModal} />
+        )}
+      </ErrorBoundary>
     </ThemeProvider>
   );
 };

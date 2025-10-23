@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { monthNames, Views } from '@/core/constants';
 import { ICalendar, MonthNames } from '@/core/types';
@@ -23,6 +23,13 @@ export const useDataPicker = (
   const [selectedYear, setSelectedYear] = useState(selectedDate.getFullYear());
   const [pointedYear, setPointedYear] = useState(pointedDate.getFullYear());
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (customDate) {
+      setPointedDate(customDate);
+      setSelectedDate(customDate);
+    }
+  }, [customDate]);
 
   const openTasksModal = () => setIsModalOpen(true);
   const closeTasksModal = () => setIsModalOpen(false);
