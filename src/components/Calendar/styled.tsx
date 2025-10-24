@@ -21,6 +21,7 @@ export const CalendarHeader = styled.div`
     justify-content: space-between;
     align-items: center;
     gap: ${theme.spacing.base};
+    margin-bottom: ${theme.spacing.sm};
   `}
 `;
 
@@ -56,14 +57,28 @@ export const CalendarGrid = styled.div`
   `}
 `;
 
+export const YearsCalendarGrid = styled.div`
+  ${({ theme }) => css`
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: ${theme.spacing.xs};
+
+    @media screen and ${theme.breakpoint.mobile} {
+      gap: ${theme.spacing.xs};
+      grid-template-columns: repeat(4, 1fr);
+    }
+  `}
+`;
+
 export const MonthsCalendarGrid = styled.div`
   ${({ theme }) => css`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: ${theme.spacing.xs};
 
-    @media ${theme.breakpoint.mobile} {
+    @media screen and ${theme.breakpoint.mobile} {
       gap: ${theme.spacing.xs};
+      grid-template-columns: repeat(3, 1fr);
     }
   `}
 `;
@@ -79,7 +94,7 @@ export const WeekDayHeader = styled.div`
 
     @media ${theme.breakpoint.mobile} {
       padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.h4};
+      font-size: ${theme.fontSize.h5};
     }
   `}
 `;

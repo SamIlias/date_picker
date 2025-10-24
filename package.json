@@ -1,8 +1,9 @@
 {
-  "name": "@ilya/datepicker",
+  "name": "@sam/datepicker",
   "version": "1.0.0",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "files": ["dist", "README.md"],
   "types": "dist/index.d.ts",
   "license": "MIT",
   "type": "module",

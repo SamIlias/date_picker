@@ -9,6 +9,7 @@ declare module 'styled-components' {
       };
       background: {
         primary: string;
+        secondary: string;
         button: string;
         activeCell: string;
         onCellHover: string;

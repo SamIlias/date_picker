@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import { buttonBaseStyles } from '../commonStyles';
+
 const MAX_HEIGHT = '600px';
 const HIDDEN_Y_POSITION = '-10px';
 
@@ -11,25 +13,11 @@ export const ControlPanel = styled.div`
 `;
 
 export const ToggleButton = styled.button`
+  ${buttonBaseStyles}
   ${({ theme }) => css`
     align-self: end;
     margin-bottom: ${theme.spacing.sm};
     padding: ${theme.spacing.xs} ${theme.spacing.base};
-    border: none;
-    border-radius: ${theme.borderRadius.sm};
-    background: ${theme.color.background.button};
-    color: ${theme.color.text.contrast};
-    font-weight: ${theme.fontWeight.medium};
-    cursor: pointer;
-    transition: background 0.2s ease;
-
-    &:hover {
-      background: ${theme.color.background.button};
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
   `}
 `;
 

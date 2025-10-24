@@ -11,6 +11,7 @@ import { DarkModeProvider, useDarkMode } from '@/context/darkModeContext';
 import { formatDateForInput, Views } from '@/core/constants';
 import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { ICalendar } from '@/core/types';
+import { GlobalStyle } from '@/GlobalStyles';
 import { darkTheme, lightTheme } from '@/theme/theme';
 import { useDataPicker } from '@/useDataPicker';
 
@@ -68,6 +69,7 @@ export const MainComponent: FC<DatePickerProps> = ({ calendar, customDate, custo
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <GlobalStyle />
         <ControlPanel
           view={view}
           onViewChange={setView}

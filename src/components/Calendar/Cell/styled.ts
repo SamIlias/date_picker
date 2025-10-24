@@ -5,7 +5,7 @@ import { DateCellProps } from '@/components/Calendar/Cell/DateCell';
 
 const TRANSITION_DURATION = '0.5s';
 const CELL_MIN_HEIGHT = '20px';
-const CELL_MIN_HEIGHT_MOBILE = '16px';
+const CELL_MIN_HEIGHT_MOBILE = '10px';
 
 type DateCellPropsForStyles = Omit<
   DateCellProps,
@@ -76,6 +76,12 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
       return theme.color.background.primary;
     }};
 
+    @media ${theme.breakpoint.mobile} {
+      padding: ${theme.spacing.xs};
+      font-size: ${theme.fontSize.small};
+      min-height: ${CELL_MIN_HEIGHT_MOBILE};
+    }
+
     ${($isSelected || $isRangeEnd || $isRangeStart) &&
     css`
       color: white;
@@ -129,11 +135,7 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
       pointer-events: none;
       background-color: ${theme.color.background.disabled};
       color: ${theme.color.text.placeholder};
-    `} @media ${theme.breakpoint.mobile} {
-      padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.h4};
-      min-height: ${CELL_MIN_HEIGHT_MOBILE};
-    }
+    `}
   `}
 `;
 
@@ -156,21 +158,18 @@ export const Cell = styled.div<CellPropsForStyles>`
       return theme.color.background.primary;
     }};
 
-    ${
-      $isCurrent &&
-      css`
-        border: ${theme.borderThickness.medium} solid ${theme.color.background.activeCell};
-      `
-    }
+    ${$isCurrent &&
+    css`
+      border: ${theme.borderThickness.medium} solid ${theme.color.background.activeCell};
+    `}
     &:hover {
       background-color: ${theme.color.background.onCellHover};
     }
-  ;
-  }
 
-  @media ${theme.breakpoint.mobile} {
-    padding: ${theme.spacing.xs};
-    min-height: ${CELL_MIN_HEIGHT_MOBILE};
-  }
+    @media ${theme.breakpoint.mobile} {
+      padding: ${theme.spacing.xs};
+      min-height: ${CELL_MIN_HEIGHT_MOBILE};
+      font-size: ${theme.fontSize.h6};
+    }
   `}
 `;

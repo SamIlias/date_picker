@@ -27,7 +27,7 @@ export const Overlay = styled.div`
 
 export const Modal = styled.div`
   ${({ theme }) => css`
-    background: ${theme.color.background.primary};
+    background: ${theme.color.background.secondary};
     color: ${theme.color.text.primary};
     border-radius: ${theme.borderRadius.md};
     width: 80%;

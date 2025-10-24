@@ -8,6 +8,7 @@ const baseTheme: DefaultTheme = {
     },
     background: {
       primary: '#ffffff',
+      secondary: '#A4A4A4D8',
       button: '#6da8f5',
       activeCell: '#2F80ED',
       onCellHover: '#F1F1F1',
@@ -99,7 +100,8 @@ export const darkTheme: DefaultTheme = {
     },
     background: {
       primary: '#131313',
-      button: '#3a626c',
+      secondary: '#282828',
+      button: '#3b4f65',
       activeCell: '#2F80ED',
       onCellHover: '#696868',
       range: '#2F80ED1A',

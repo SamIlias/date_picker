@@ -9,6 +9,7 @@ export const Settings = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.base};
+    margin-bottom: ${theme.spacing.base};
   `}
 `;
 

@@ -6,7 +6,7 @@ import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
 
-const DEFAULT_YEAR_COUNT = 7;
+const DEFAULT_YEAR_COUNT = 8;
 
 interface YearCalendarProps {
   calendar: ICalendar;
@@ -34,11 +34,11 @@ export const YearsCalendar: FC<YearCalendarProps> = ({
         <NextButton onClick={onNext} />
       </S.CalendarHeader>
 
-      <S.CalendarGrid>
+      <S.YearsCalendarGrid>
         {calendarData.map((year) => (
           <Cell value={year} key={year} onClick={onYearSelect} $isCurrent={currentYear === year} />
         ))}
-      </S.CalendarGrid>
+      </S.YearsCalendarGrid>
     </S.Calendar>
   );
 };
