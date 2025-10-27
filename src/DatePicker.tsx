@@ -7,12 +7,14 @@ import { YearsCalendar } from '@/components/Calendar/YearsCalendar';
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { ErrorFallback } from '@/components/ErrorFallback';
 import { TasksModal } from '@/components/TasksModal';
-import { DarkModeProvider, useDarkMode } from '@/context/darkModeContext';
+import { SizeContext } from '@/context/SizeContext';
 import { formatDateForInput, Views } from '@/core/constants';
+import { hasRangeFeature } from '@/core/decorators/RangeCalendarDecorator';
 import { hasTasksFeature } from '@/core/decorators/TasksCalendarDecorator';
 import { ICalendar } from '@/core/types';
 import { GlobalStyle } from '@/GlobalStyles';
-import { darkTheme, lightTheme } from '@/theme/theme';
+import { AppWrapper } from '@/styled';
+import { darkTheme, lightTheme, ThemeColor } from '@/theme/theme';
 import { useDataPicker } from '@/useDataPicker';
 
 import { ControlPanel } from './components/ControlPanel';
@@ -21,28 +23,26 @@ export type DatePickerProps = {
   calendar: ICalendar;
   customDate: Date;
   customCallback: (date: Date) => void;
+  theme?: ThemeColor;
+  showHolidaysCustom?: boolean;
+  showWeekendsCustom?: boolean;
 };
 
-export const DatePicker: FC<DatePickerProps> = ({ calendar, customDate, customCallback }) => {
-  return (
-    <DarkModeProvider>
-      <MainComponent calendar={calendar} customDate={customDate} customCallback={customCallback} />
-    </DarkModeProvider>
-  );
-};
-
-export const MainComponent: FC<DatePickerProps> = ({ calendar, customDate, customCallback }) => {
-  const { isDark } = useDarkMode();
-
+export const DatePicker: FC<DatePickerProps> = ({
+  calendar,
+  customDate,
+  customCallback,
+  theme = ThemeColor.LIGHT,
+  showWeekendsCustom,
+  showHolidaysCustom,
+}) => {
   const {
     view,
     setView,
     weekStartsOn,
     setWeekStartsOn,
     showWeekends,
-    setShowWeekends,
     showHolidays,
-    setShowHolidays,
     rangeStart,
     rangeEnd,
     onStartRangePick,
@@ -64,71 +64,76 @@ export const MainComponent: FC<DatePickerProps> = ({ calendar, customDate, custo
     isModalOpen,
     openTasksModal,
     closeTasksModal,
-  } = useDataPicker(calendar, customDate, customCallback);
+    ref,
+    containerSize,
+  } = useDataPicker(calendar, customDate, customCallback, showHolidaysCustom, showWeekendsCustom);
+
+  const isDark = theme === ThemeColor.DARK;
 
   return (
     <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
       <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <GlobalStyle />
-        <ControlPanel
-          view={view}
-          onViewChange={setView}
-          weekStartsOn={weekStartsOn}
-          onWeekStartsOnChange={setWeekStartsOn}
-          showWeekends={showWeekends}
-          onShowWeekendsChange={setShowWeekends}
-          showHolidays={showHolidays}
-          onShowHolidaysChange={setShowHolidays}
-          from={formatDateForInput(rangeStart)}
-          to={formatDateForInput(rangeEnd)}
-          onFromChange={onStartRangePick}
-          onToChange={onEndRangePick}
-          selectedDate={selectedDate}
-          onDateInputPick={onDateInputPick}
-        />
+        <SizeContext value={containerSize}>
+          <AppWrapper ref={ref}>
+            <GlobalStyle />
+            <ControlPanel
+              view={view}
+              onViewChange={setView}
+              weekStartsOn={weekStartsOn}
+              onWeekStartsOnChange={setWeekStartsOn}
+              from={formatDateForInput(rangeStart)}
+              to={formatDateForInput(rangeEnd)}
+              onFromChange={onStartRangePick}
+              onToChange={onEndRangePick}
+              selectedDate={selectedDate}
+              onDateInputPick={onDateInputPick}
+              hasRangeFeature={hasRangeFeature(calendar)}
+            />
 
-        {view === Views.YEARS && (
-          <YearsCalendar
-            calendar={calendar}
-            pointedYear={pointedYear}
-            currentYear={currentYear}
-            onNext={onNextYearClick}
-            onPrev={onPrevYearClick}
-            onYearSelect={onYearSelect}
-          />
-        )}
+            {view === Views.YEARS && (
+              <YearsCalendar
+                calendar={calendar}
+                pointedYear={pointedYear}
+                currentYear={currentYear}
+                onNext={onNextYearClick}
+                onPrev={onPrevYearClick}
+                onYearSelect={onYearSelect}
+              />
+            )}
 
-        {view === Views.MONTHS && (
-          <MonthsCalendar
-            currentMonth={currentMonth}
-            selectedYear={selectedYear}
-            onMonthSelect={onMonthSelect}
-            onViewChange={setView}
-          />
-        )}
+            {view === Views.MONTHS && (
+              <MonthsCalendar
+                currentMonth={currentMonth}
+                selectedYear={selectedYear}
+                onMonthSelect={onMonthSelect}
+                onViewChange={setView}
+              />
+            )}
 
-        {view === Views.WEEKS && (
-          <WeeksCalendar
-            calendar={calendar}
-            onViewChange={setView}
-            pointedDate={pointedDate}
-            selectedDate={selectedDate}
-            showWeekends={showWeekends}
-            showHolidays={showHolidays}
-            weekStartsOn={weekStartsOn}
-            holidays={calendar.config.holidays}
-            onDateSelect={onDateSelect}
-            openTasks={openTasksModal}
-            onNextMonth={onNextMonthClick}
-            onPrevMonth={onPrevMonthClick}
-            rangeEnd={rangeEnd}
-            rangeStart={rangeStart}
-          />
-        )}
+            {view === Views.WEEKS && (
+              <WeeksCalendar
+                calendar={calendar}
+                onViewChange={setView}
+                pointedDate={pointedDate}
+                selectedDate={selectedDate}
+                showWeekends={showWeekends}
+                showHolidays={showHolidays}
+                weekStartsOn={weekStartsOn}
+                holidays={calendar.config.holidays}
+                onDateSelect={onDateSelect}
+                openTasks={openTasksModal}
+                onNextMonth={onNextMonthClick}
+                onPrevMonth={onPrevMonthClick}
+                rangeEnd={rangeEnd}
+                rangeStart={rangeStart}
+              />
+            )}
 
-        {isModalOpen && hasTasksFeature(calendar) && (
-          <TasksModal date={selectedDate} calendar={calendar} onClose={closeTasksModal} />
-        )}
+            {isModalOpen && hasTasksFeature(calendar) && (
+              <TasksModal date={selectedDate} calendar={calendar} onClose={closeTasksModal} />
+            )}
+          </AppWrapper>
+        </SizeContext>
       </ErrorBoundary>
     </ThemeProvider>
   );

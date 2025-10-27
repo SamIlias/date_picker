@@ -1,26 +1,33 @@
 import styled, { css } from 'styled-components';
 
-const SHADOW = '0 2px 8px rgba(0, 0, 0, 0.1)';
+import { ContainerSize } from '@/context/SizeContext';
+import { ContainerSizeProps } from '@/styled';
 
-export const Calendar = styled.div`
-  ${({ theme }) => css`
+const SHADOW = '0 2px 8px rgba(0, 0, 0, 0.1)';
+const GRID_GAP = '1px';
+
+export const Calendar = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
+    display: flex;
+    flex-direction: column;
     background-color: ${theme.color.background.primary};
     border-radius: ${theme.borderRadius.md};
     padding: ${theme.spacing.md};
     box-shadow: ${SHADOW};
 
-    @media ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       padding: ${theme.spacing.sm};
-    }
+    `}
   `}
 `;
 
 export const CalendarHeader = styled.div`
   ${({ theme }) => css`
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: ${theme.spacing.base};
     margin-bottom: ${theme.spacing.sm};
   `}
 `;
@@ -29,8 +36,8 @@ interface HeaderTitleProps {
   $isClickable?: boolean;
 }
 
-export const HeaderTitle = styled.h2<HeaderTitleProps>`
-  ${({ theme, $isClickable = false }) => css`
+export const HeaderTitle = styled.span<HeaderTitleProps & ContainerSizeProps>`
+  ${({ theme, $isClickable = false, $containerSize }) => css`
     font-size: ${theme.fontSize.h2};
     font-weight: ${theme.fontWeight.semibold};
     color: ${theme.color.text.primary};
@@ -39,62 +46,67 @@ export const HeaderTitle = styled.h2<HeaderTitleProps>`
     flex: 1;
     cursor: ${$isClickable ? 'pointer' : 'auto'};
 
-    @media ${theme.breakpoint.mobile} {
-      font-size: ${theme.fontSize.h3};
-    }
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      font-size: ${theme.fontSize.h5};
+    `}
   `}
 `;
 
 export const CalendarGrid = styled.div`
-  ${({ theme }) => css`
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: ${theme.spacing.xs};
-
-    @media ${theme.breakpoint.mobile} {
-      gap: ${theme.spacing.xs};
-    }
-  `}
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  justify-content: space-between;
+  align-items: center;
+  gap: ${GRID_GAP};
 `;
 
-export const YearsCalendarGrid = styled.div`
-  ${({ theme }) => css`
+export const YearsCalendarGrid = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: ${theme.spacing.xs};
 
-    @media screen and ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       gap: ${theme.spacing.xs};
       grid-template-columns: repeat(4, 1fr);
-    }
+    `}
   `}
 `;
 
-export const MonthsCalendarGrid = styled.div`
-  ${({ theme }) => css`
+export const MonthsCalendarGrid = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: ${theme.spacing.xs};
 
-    @media screen and ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.MEDIUM &&
+    css`
       gap: ${theme.spacing.xs};
       grid-template-columns: repeat(3, 1fr);
-    }
+    `}
+
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      gap: ${theme.spacing.xs};
+      grid-template-columns: repeat(2, 1fr);
+    `}
   `}
 `;
 
-export const WeekDayHeader = styled.div`
-  ${({ theme }) => css`
-    padding: ${theme.spacing.sm};
+export const WeekDayCell = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     text-align: center;
-    font-size: ${theme.fontSize.h1};
+    font-size: ${theme.fontSize.h2};
     font-weight: ${theme.fontWeight.semibold};
     color: ${theme.color.text.secondary};
     font-family: ${theme.fontFamily.primary};
 
-    @media ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.h5};
-    }
+      font-size: ${theme.fontSize.h6};
+    `}
   `}
 `;

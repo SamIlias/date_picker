@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ComponentProps } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import { ContainerSize, SizeContext } from '@/context/SizeContext';
 import { darkTheme } from '@/theme/theme';
 
 import { RangeInput } from '.';
@@ -13,13 +14,15 @@ describe('RangeInput', () => {
   const renderComponent = (props: Partial<ComponentProps<typeof RangeInput>> = {}) => {
     render(
       <ThemeProvider theme={darkTheme}>
-        <RangeInput
-          from="2025-01-01"
-          to="2025-12-31"
-          onFromChange={mockOnFromChange}
-          onToChange={mockOnToChange}
-          {...props}
-        />
+        <SizeContext value={ContainerSize.COMPACT}>
+          <RangeInput
+            from="2025-01-01"
+            to="2025-12-31"
+            onFromChange={mockOnFromChange}
+            onToChange={mockOnToChange}
+            {...props}
+          />
+        </SizeContext>
       </ThemeProvider>,
     );
   };

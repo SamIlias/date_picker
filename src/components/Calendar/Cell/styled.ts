@@ -2,10 +2,12 @@ import styled, { css } from 'styled-components';
 
 import { CellProps } from '@/components/Calendar/Cell/Cell';
 import { DateCellProps } from '@/components/Calendar/Cell/DateCell';
+import { ContainerSize } from '@/context/SizeContext';
+import { ContainerSizeProps } from '@/styled';
 
 const TRANSITION_DURATION = '0.5s';
 const CELL_MIN_HEIGHT = '20px';
-const CELL_MIN_HEIGHT_MOBILE = '10px';
+const CELL_MIN_HEIGHT_COMPACT = '8px';
 
 type DateCellPropsForStyles = Omit<
   DateCellProps,
@@ -13,27 +15,47 @@ type DateCellPropsForStyles = Omit<
 >;
 type CellPropsForStyles = Pick<CellProps<number | string>, '$isCurrent'>;
 
-export const TaskLabel = styled.span`
-  ${({ theme }) => css`
-    font-size: ${theme.fontSize.small};
+export const TaskLabel = styled.span<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
+    align-self: start;
+    font-size: ${theme.fontSize.h3};
     color: ${theme.color.red.light};
-    height: 30%;
+
+    ${$containerSize === ContainerSize.MEDIUM &&
+    css`
+      align-self: center;
+      font-size: ${theme.fontSize.h5};
+    `}
+
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      align-self: center;
+      font-size: ${theme.fontSize.small};
+    `}
   `}
 `;
 
-export const DateNumber = styled.div`
-  display: flex;
-  align-items: end;
-  height: 70%;
+export const DateNumber = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
+    font-size: ${theme.fontSize.h1};
+    align-self: end;
+    padding-bottom: ${theme.spacing.base};
 
-  ${({ theme }) => css`
-    @media ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.MEDIUM &&
+    css`
       font-size: ${theme.fontSize.h4};
-    }
+      padding-bottom: 0;
+    `}
+
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      font-size: ${theme.fontSize.h6};
+      padding-bottom: 0;
+    `}
   `}
 `;
 
-export const DateCell = styled.div<DateCellPropsForStyles>`
+export const DateCell = styled.div<DateCellPropsForStyles & ContainerSizeProps>`
   ${({
     theme,
     $isOtherMonth,
@@ -45,23 +67,19 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
     $isWeekend,
     $isHoliday,
     $isDateAllowed,
+    $containerSize,
   }) => css`
-    padding: ${theme.spacing.sm};
     text-align: center;
     border-radius: ${theme.borderRadius.sm};
     cursor: pointer;
-    font-size: ${theme.fontSize.h1};
     font-family: ${theme.fontFamily.primary};
     font-weight: ${theme.fontWeight.regular};
     transition:
       background-color ${TRANSITION_DURATION} ease,
       color ${TRANSITION_DURATION} ease;
     aspect-ratio: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: ${CELL_MIN_HEIGHT};
+    display: grid;
+    grid-template-rows: 65% 35%;
 
     color: ${$isInRange
       ? theme.color.text.ranged
@@ -76,12 +94,11 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
       return theme.color.background.primary;
     }};
 
-    @media ${theme.breakpoint.mobile} {
-      padding: ${theme.spacing.xs};
-      font-size: ${theme.fontSize.small};
-      min-height: ${CELL_MIN_HEIGHT_MOBILE};
-    }
-
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      font-size: ${theme.fontSize.h6};
+      min-height: ${CELL_MIN_HEIGHT_COMPACT};
+    `}
     ${($isSelected || $isRangeEnd || $isRangeStart) &&
     css`
       color: white;
@@ -139,10 +156,11 @@ export const DateCell = styled.div<DateCellPropsForStyles>`
   `}
 `;
 
-export const Cell = styled.div<CellPropsForStyles>`
-  ${({ theme, $isCurrent }) => css`
+export const Cell = styled.div<CellPropsForStyles & ContainerSizeProps>`
+  ${({ theme, $isCurrent, $containerSize }) => css`
     padding: ${theme.spacing.sm};
     border-radius: ${theme.borderRadius.sm};
+    color: ${theme.color.text.primary};
     cursor: pointer;
     font-size: ${theme.fontSize.h3};
     font-family: ${theme.fontFamily.primary};
@@ -166,10 +184,11 @@ export const Cell = styled.div<CellPropsForStyles>`
       background-color: ${theme.color.background.onCellHover};
     }
 
-    @media ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       padding: ${theme.spacing.xs};
-      min-height: ${CELL_MIN_HEIGHT_MOBILE};
+      min-height: ${CELL_MIN_HEIGHT_COMPACT};
       font-size: ${theme.fontSize.h6};
-    }
+    `}
   `}
 `;

@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { ComponentProps } from 'react';
 import { ThemeProvider } from 'styled-components';
 
+import { ContainerSize, SizeContext } from '@/context/SizeContext';
 import { Views, WeekStartsOn } from '@/core/constants';
 import { darkTheme } from '@/theme/theme';
 
@@ -13,7 +14,7 @@ describe('YearsCalendar', () => {
   const mockOnNext = jest.fn();
 
   const createMockCalendar = () => ({
-    getYearsForGrid: jest.fn(() => [2020, 2021, 2022, 2023, 2024, 2025, 2026]),
+    getYearsForGrid: jest.fn(() => [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027]),
     config: {
       view: Views.YEARS,
       weekStartsOn: WeekStartsOn.MONDAY,
@@ -41,15 +42,17 @@ describe('YearsCalendar', () => {
 
     render(
       <ThemeProvider theme={darkTheme}>
-        <YearsCalendar
-          calendar={calendar}
-          pointedYear={2025}
-          currentYear={2025}
-          onYearSelect={mockOnYearSelect}
-          onPrev={mockOnPrev}
-          onNext={mockOnNext}
-          {...props}
-        />
+        <SizeContext value={ContainerSize.COMPACT}>
+          <YearsCalendar
+            calendar={calendar}
+            pointedYear={2025}
+            currentYear={2025}
+            onYearSelect={mockOnYearSelect}
+            onPrev={mockOnPrev}
+            onNext={mockOnNext}
+            {...props}
+          />
+        </SizeContext>
       </ThemeProvider>,
     );
 
@@ -67,8 +70,8 @@ describe('YearsCalendar', () => {
 
   test('renders years returned by calendar.getYearsForGrid()', () => {
     const { calendar } = renderComponent();
-    expect(calendar.getYearsForGrid).toHaveBeenCalledWith(2025, 7);
-    [2020, 2021, 2022, 2023, 2024, 2025, 2026].forEach((year) => {
+    expect(calendar.getYearsForGrid).toHaveBeenCalledWith(2025, 8);
+    [2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027].forEach((year) => {
       expect(screen.getByText(year.toString())).toBeInTheDocument();
     });
   });

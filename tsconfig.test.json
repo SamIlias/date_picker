@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/setupTests.ts",
+    "src/ExamplePicker.tsx",
+    "src/stories",
+    "src/__tests__",
+    "src/ExamplePicker.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
+}

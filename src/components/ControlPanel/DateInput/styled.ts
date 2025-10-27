@@ -7,10 +7,6 @@ export const DateInput = styled.div`
   width: 100%;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    max-width: 100%;
-  }
 `;
 
 export const Label = styled.label`

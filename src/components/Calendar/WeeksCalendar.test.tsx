@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
+import { ContainerSize, SizeContext } from '@/context/SizeContext';
 import { monthNames, Views, WeekStartsOn } from '@/core/constants';
 import { darkTheme } from '@/theme/theme';
 
@@ -46,22 +47,24 @@ describe('WeeksCalendar', () => {
 
     render(
       <ThemeProvider theme={darkTheme}>
-        <WeeksCalendar
-          calendar={calendar}
-          pointedDate={baseDate}
-          selectedDate={baseDate}
-          holidays={[]}
-          rangeStart={null}
-          rangeEnd={null}
-          weekStartsOn={WeekStartsOn.MONDAY}
-          showWeekends={true}
-          showHolidays={false}
-          onDateSelect={mockOnDateSelect}
-          openTasks={mockOpenTasks}
-          onPrevMonth={mockOnPrevMonth}
-          onNextMonth={mockOnNextMonth}
-          onViewChange={mockOnViewChange}
-        />
+        <SizeContext value={ContainerSize.COMPACT}>
+          <WeeksCalendar
+            calendar={calendar}
+            pointedDate={baseDate}
+            selectedDate={baseDate}
+            holidays={[]}
+            rangeStart={null}
+            rangeEnd={null}
+            weekStartsOn={WeekStartsOn.MONDAY}
+            showWeekends={true}
+            showHolidays={false}
+            onDateSelect={mockOnDateSelect}
+            openTasks={mockOpenTasks}
+            onPrevMonth={mockOnPrevMonth}
+            onNextMonth={mockOnNextMonth}
+            onViewChange={mockOnViewChange}
+          />
+        </SizeContext>
       </ThemeProvider>,
     );
   };

@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { Cell } from '@/components/Calendar/Cell/Cell';
+import { useContainerSize } from '@/context/SizeContext';
 import { monthNames, Views } from '@/core/constants';
 import { MonthNames } from '@/core/types';
 
@@ -23,15 +24,17 @@ export const MonthsCalendar: FC<MonthCalendarProps> = ({
     onViewChange(Views.YEARS);
   };
 
+  const containerSize = useContainerSize();
+
   return (
-    <S.Calendar>
+    <S.Calendar $containerSize={containerSize}>
       <S.CalendarHeader>
-        <S.HeaderTitle $isClickable={true} onClick={handleYearClick}>
+        <S.HeaderTitle $containerSize={containerSize} $isClickable={true} onClick={handleYearClick}>
           {selectedYear}
         </S.HeaderTitle>
       </S.CalendarHeader>
 
-      <S.MonthsCalendarGrid>
+      <S.MonthsCalendarGrid $containerSize={containerSize}>
         {monthNames.map((month) => (
           <Cell
             value={month}

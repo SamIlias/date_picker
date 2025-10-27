@@ -1,5 +1,7 @@
 import { FC } from 'react';
 
+import { useContainerSize } from '@/context/SizeContext';
+
 import * as S from './styled';
 import { DateNumber, TaskLabel } from './styled';
 
@@ -37,8 +39,12 @@ export const DateCell: FC<DateCellProps> = ({
   const onCellClick = () => {
     onClick(date);
   };
+
+  const containerSize = useContainerSize();
+
   return (
     <S.DateCell
+      $containerSize={containerSize}
       onDoubleClick={onDoubleClick}
       onClick={onCellClick}
       $isToday={$isToday}
@@ -51,8 +57,8 @@ export const DateCell: FC<DateCellProps> = ({
       $isHoliday={$isHoliday}
       $isDateAllowed={$isDateAllowed}
     >
-      <DateNumber>{date.getDate()}</DateNumber>
-      <TaskLabel>{hasTasks ? '☀' : ''}</TaskLabel>
+      <DateNumber $containerSize={containerSize}>{date.getDate()}</DateNumber>
+      <TaskLabel $containerSize={containerSize}>{hasTasks ? '☀' : ''}</TaskLabel>
     </S.DateCell>
   );
 };

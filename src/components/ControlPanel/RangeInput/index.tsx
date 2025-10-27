@@ -1,6 +1,7 @@
 import { FC } from 'react';
 
 import { DateInput } from '@/components/ControlPanel/DateInput';
+import { useContainerSize } from '@/context/SizeContext';
 
 import * as S from './styled';
 
@@ -17,11 +18,14 @@ export const RangeInput: FC<RangeInputProps> = ({ from, to, onFromChange, onToCh
     onToChange(null);
   };
 
+  const isDisabled = !from && !to;
+  const containerSize = useContainerSize();
+
   return (
-    <S.RangeInput>
+    <S.RangeInput $containerSize={containerSize}>
       <DateInput value={from} onChange={onFromChange} htmlFor={'from-date'} label={'From'} />
       <DateInput value={to} onChange={onToChange} htmlFor={'to-date'} label={'To'} />
-      <S.ClearButton onClick={handleClear} disabled={!from && !to}>
+      <S.ClearButton onClick={handleClear} disabled={isDisabled} $containerSize={containerSize}>
         {'Clear'}
       </S.ClearButton>
     </S.RangeInput>

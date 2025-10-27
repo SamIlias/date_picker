@@ -3,7 +3,11 @@ import styled, { css } from 'styled-components';
 import { buttonBaseStyles } from '../commonStyles';
 
 const MODAL_MAX_WIDTH = '400px';
-const MODAL_Z_INDEX = 1000;
+const MODAL_Z_INDEX = 100;
+const CONFIRM_Z_INDEX = 1000;
+const MAX_WIDTH_CONFIRM = '300px';
+const OVERLAY_COLOR = '#00000033';
+const CONFIRM_OVERLAY_COLOR = '#000000E5';
 
 const flexCenter = css`
   display: flex;
@@ -20,7 +24,7 @@ const baseButtonReset = css`
 export const Overlay = styled.div`
   position: fixed;
   inset: 0;
-  background: #00000033;
+  background: ${OVERLAY_COLOR};
   ${flexCenter};
   z-index: ${MODAL_Z_INDEX};
 `;
@@ -139,5 +143,67 @@ export const ErrorMessage = styled.p<{ isVisible?: boolean }>`
     font-size: ${theme.fontSize.h6};
     min-height: 1rem;
     visibility: ${isVisible ? 'visible' : 'hidden'};
+  `}
+`;
+
+export const ConfirmOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  background: ${CONFIRM_OVERLAY_COLOR};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: ${CONFIRM_Z_INDEX};
+`;
+
+export const ConfirmModal = styled.div`
+  ${({ theme }) => css`
+    background: ${theme.color.background.secondary};
+    color: ${theme.color.text.primary};
+    padding: ${theme.spacing.md};
+    border-radius: ${theme.borderRadius.lg};
+    box-shadow: ${theme.shadow.hard};
+    min-width: ${MAX_WIDTH_CONFIRM};
+    text-align: center;
+  `}
+`;
+
+export const ConfirmActions = styled.div`
+  ${({ theme }) => css`
+    display: flex;
+    justify-content: center;
+    gap: ${theme.spacing.sm};
+    margin-top: ${theme.spacing.base};
+  `}
+`;
+
+export const CancelButton = styled.button`
+  ${({ theme }) => css`
+    background: ${theme.color.background.button};
+    color: ${theme.color.text.primary};
+    border: none;
+    padding: ${theme.spacing.sm} ${theme.spacing.base};
+    border-radius: ${theme.borderRadius.sm};
+    cursor: pointer;
+    transition: background 0.2s ease;
+    &:hover {
+      background: ${theme.color.background.onCellHover};
+    }
+  `}
+`;
+
+export const ConfirmButton = styled.button`
+  ${({ theme }) => css`
+    background: ${theme.color.red.main};
+    color: ${theme.color.text.contrast};
+    border: none;
+    padding: ${theme.spacing.sm} ${theme.spacing.base};
+    border-radius: ${theme.borderRadius.sm};
+    cursor: pointer;
+    transition: background 0.2s ease;
+
+    &:hover {
+      background: ${theme.color.red.dark};
+    }
   `}
 `;

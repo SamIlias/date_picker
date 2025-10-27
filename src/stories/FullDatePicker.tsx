@@ -9,8 +9,6 @@ import {
 } from '@';
 import { ThemeColor } from '@/theme/theme';
 
-import { ExampleWrapper } from './styled';
-
 const config: CalendarConfig = {
   view: Views.WEEKS,
   weekStartsOn: WeekStartsOn.MONDAY,
@@ -25,23 +23,31 @@ const config: CalendarConfig = {
 const builder = new Builder(config);
 const calendar = builder.createCalendar();
 
-export const Example = () => {
-  const customDate = new Date(2024, 10, 3);
+type FullDatePickerProps = {
+  theme: ThemeColor;
+  showWeekendsCustom: boolean;
+  showHolidaysCustom: boolean;
+};
+
+export const FullDatePicker = ({
+  theme,
+  showWeekendsCustom,
+  showHolidaysCustom,
+}: FullDatePickerProps) => {
+  const customDate = new Date(2025, 10, 3);
 
   const customCallback = (date: Date) => {
     console.log('Here the date for your app: ', date);
   };
 
   return (
-    <ExampleWrapper>
-      <DatePicker
-        calendar={calendar}
-        customDate={customDate}
-        customCallback={customCallback}
-        theme={ThemeColor.LIGHT}
-        showWeekendsCustom={true}
-        showHolidaysCustom={true}
-      />
-    </ExampleWrapper>
+    <DatePicker
+      calendar={calendar}
+      customDate={customDate}
+      customCallback={customCallback}
+      theme={theme}
+      showWeekendsCustom={showWeekendsCustom}
+      showHolidaysCustom={showHolidaysCustom}
+    />
   );
 };

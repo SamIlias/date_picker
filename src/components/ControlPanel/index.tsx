@@ -3,6 +3,7 @@ import { FC, useState } from 'react';
 import { DateInput } from '@/components/ControlPanel/DateInput';
 import { RangeInput } from '@/components/ControlPanel/RangeInput';
 import { Settings } from '@/components/ControlPanel/Settings';
+import { useContainerSize } from '@/context/SizeContext';
 import { formatDateForInput, Views, WeekStartsOn } from '@/core/constants';
 
 import * as S from './styled';
@@ -12,16 +13,13 @@ export type ControlPanelProps = {
   onViewChange: (view: Views) => void;
   weekStartsOn: WeekStartsOn;
   onWeekStartsOnChange: (weekStartsOn: WeekStartsOn) => void;
-  showWeekends: boolean;
-  onShowWeekendsChange: (check: boolean) => void;
-  showHolidays: boolean;
-  onShowHolidaysChange: (check: boolean) => void;
   from: string;
   to: string;
   onFromChange: (value: string | null) => void;
   onToChange: (value: string | null) => void;
   selectedDate: Date;
   onDateInputPick: (value: string) => void;
+  hasRangeFeature: boolean;
 };
 
 export const ControlPanel: FC<ControlPanelProps> = ({
@@ -29,21 +27,23 @@ export const ControlPanel: FC<ControlPanelProps> = ({
   onViewChange,
   weekStartsOn,
   onWeekStartsOnChange,
-  showWeekends,
-  onShowWeekendsChange,
-  showHolidays,
-  onShowHolidaysChange,
   from,
   to,
   onFromChange,
   onToChange,
   onDateInputPick,
   selectedDate,
+  hasRangeFeature,
 }) => {
   const [isSettingsVisible, setIsSettingsVisible] = useState(true);
+  const containerSize = useContainerSize();
+
   return (
     <S.ControlPanel>
-      <S.ToggleButton onClick={() => setIsSettingsVisible((prev) => !prev)}>
+      <S.ToggleButton
+        $containerSize={containerSize}
+        onClick={() => setIsSettingsVisible((prev) => !prev)}
+      >
         {isSettingsVisible ? 'Hide settings' : 'Show settings'}
       </S.ToggleButton>
 
@@ -53,13 +53,10 @@ export const ControlPanel: FC<ControlPanelProps> = ({
           onViewChange={onViewChange}
           weekStartsOn={weekStartsOn}
           onWeekStartsOnChange={onWeekStartsOnChange}
-          showWeekends={showWeekends}
-          onShowWeekendsChange={onShowWeekendsChange}
-          showHolidays={showHolidays}
-          onShowHolidaysChange={onShowHolidaysChange}
         />
-        <RangeInput from={from} to={to} onFromChange={onFromChange} onToChange={onToChange} />
-
+        {hasRangeFeature && (
+          <RangeInput from={from} to={to} onFromChange={onFromChange} onToChange={onToChange} />
+        )}
         <DateInput
           value={formatDateForInput(selectedDate)}
           onChange={onDateInputPick}

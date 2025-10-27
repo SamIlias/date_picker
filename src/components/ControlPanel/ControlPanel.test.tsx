@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
+import { ContainerSize, SizeContext } from '@/context/SizeContext';
 import { Views, WeekStartsOn } from '@/core/constants';
 import { darkTheme } from '@/theme/theme';
 
@@ -9,8 +10,6 @@ import { ControlPanel } from '.';
 describe('ControlPanel', () => {
   const mockOnViewChange = jest.fn();
   const mockOnWeekStartsOnChange = jest.fn();
-  const mockOnShowWeekendsChange = jest.fn();
-  const mockOnShowHolidaysChange = jest.fn();
   const mockOnFromChange = jest.fn();
   const mockOnToChange = jest.fn();
   const mockOnDateInputPick = jest.fn();
@@ -18,23 +17,22 @@ describe('ControlPanel', () => {
   const renderComponent = (props = {}) => {
     render(
       <ThemeProvider theme={darkTheme}>
-        <ControlPanel
-          view={Views.WEEKS}
-          onViewChange={mockOnViewChange}
-          weekStartsOn={WeekStartsOn.MONDAY}
-          onWeekStartsOnChange={mockOnWeekStartsOnChange}
-          showWeekends={true}
-          onShowWeekendsChange={mockOnShowWeekendsChange}
-          showHolidays={false}
-          onShowHolidaysChange={mockOnShowHolidaysChange}
-          from="2025-01-01"
-          to="2025-12-31"
-          onFromChange={mockOnFromChange}
-          onToChange={mockOnToChange}
-          selectedDate={new Date(2025, 0, 1)}
-          onDateInputPick={mockOnDateInputPick}
-          {...props}
-        />
+        <SizeContext value={ContainerSize.COMPACT}>
+          <ControlPanel
+            view={Views.WEEKS}
+            onViewChange={mockOnViewChange}
+            weekStartsOn={WeekStartsOn.MONDAY}
+            onWeekStartsOnChange={mockOnWeekStartsOnChange}
+            from="2025-01-01"
+            to="2025-12-31"
+            onFromChange={mockOnFromChange}
+            onToChange={mockOnToChange}
+            selectedDate={new Date(2025, 0, 1)}
+            onDateInputPick={mockOnDateInputPick}
+            hasRangeFeature={true}
+            {...props}
+          />
+        </SizeContext>
       </ThemeProvider>,
     );
   };

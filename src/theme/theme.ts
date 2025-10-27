@@ -9,7 +9,7 @@ const baseTheme: DefaultTheme = {
     background: {
       primary: '#ffffff',
       secondary: '#A4A4A4D8',
-      button: '#6da8f5',
+      button: '#a6cbf1',
       activeCell: '#2F80ED',
       onCellHover: '#F1F1F1',
       range: '#2F80ED1A',
@@ -118,3 +118,8 @@ export const darkTheme: DefaultTheme = {
     },
   },
 };
+
+export enum ThemeColor {
+  DARK = 'dark',
+  LIGHT = 'light',
+}

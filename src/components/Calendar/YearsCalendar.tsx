@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { NextButton, PrevButton } from '@/components/Buttons';
 import { Cell } from '@/components/Calendar/Cell/Cell';
+import { useContainerSize } from '@/context/SizeContext';
 import { ICalendar } from '@/core/types';
 
 import * as S from './styled';
@@ -26,15 +27,17 @@ export const YearsCalendar: FC<YearCalendarProps> = ({
   onNext,
 }) => {
   const calendarData = calendar.getYearsForGrid(pointedYear, DEFAULT_YEAR_COUNT);
+  const containerSize = useContainerSize();
+
   return (
-    <S.Calendar>
+    <S.Calendar $containerSize={containerSize}>
       <S.CalendarHeader>
         <PrevButton onClick={onPrev} />
-        <S.HeaderTitle>{'Years'}</S.HeaderTitle>
+        <S.HeaderTitle $containerSize={containerSize}>{'Years'}</S.HeaderTitle>
         <NextButton onClick={onNext} />
       </S.CalendarHeader>
 
-      <S.YearsCalendarGrid>
+      <S.YearsCalendarGrid $containerSize={containerSize}>
         {calendarData.map((year) => (
           <Cell value={year} key={year} onClick={onYearSelect} $isCurrent={currentYear === year} />
         ))}

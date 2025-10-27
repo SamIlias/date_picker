@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { NextButton, PrevButton } from '@/components/Buttons';
 import { DateCell } from '@/components/Calendar/Cell/DateCell';
+import { useContainerSize } from '@/context/SizeContext';
 import {
   monthNames,
   Views,
@@ -62,11 +63,17 @@ export const WeeksCalendar: FC<CalendarProps> = ({
     onViewChange(Views.MONTHS);
   };
 
+  const containerSize = useContainerSize();
+
   return (
-    <S.Calendar>
+    <S.Calendar $containerSize={containerSize}>
       <S.CalendarHeader>
         <PrevButton onClick={onPrevMonth} />
-        <S.HeaderTitle $isClickable={true} onClick={handleMonthClick}>
+        <S.HeaderTitle
+          $containerSize={containerSize}
+          $isClickable={true}
+          onClick={handleMonthClick}
+        >
           {monthNames[pointedDate.getMonth()]} {pointedDate.getFullYear()}
         </S.HeaderTitle>
         <NextButton onClick={onNextMonth} />
@@ -74,7 +81,9 @@ export const WeeksCalendar: FC<CalendarProps> = ({
 
       <S.CalendarGrid>
         {weekDays.map((day) => (
-          <S.WeekDayHeader key={day}>{day}</S.WeekDayHeader>
+          <S.WeekDayCell $containerSize={containerSize} key={day}>
+            {day}
+          </S.WeekDayCell>
         ))}
 
         {calendarDays.flat().map((date) => (

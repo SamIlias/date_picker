@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
+import { ContainerSize, SizeContext } from '@/context/SizeContext';
 import { monthNames, Views } from '@/core/constants';
 import { darkTheme } from '@/theme/theme';
 
@@ -13,13 +14,15 @@ describe('MonthsCalendar', () => {
   const renderComponent = (props = {}) =>
     render(
       <ThemeProvider theme={darkTheme}>
-        <MonthsCalendar
-          currentMonth="March"
-          selectedYear={2025}
-          onMonthSelect={mockOnMonthSelect}
-          onViewChange={mockOnViewChange}
-          {...props}
-        />
+        <SizeContext value={ContainerSize.COMPACT}>
+          <MonthsCalendar
+            currentMonth="March"
+            selectedYear={2025}
+            onMonthSelect={mockOnMonthSelect}
+            onViewChange={mockOnViewChange}
+            {...props}
+          />
+        </SizeContext>
       </ThemeProvider>,
     );
 
