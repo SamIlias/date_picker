@@ -29,7 +29,7 @@ export const TaskLabel = styled.span<ContainerSizeProps>`
 
     ${$containerSize === ContainerSize.COMPACT &&
     css`
-      align-self: center;
+      align-self: start;
       font-size: ${theme.fontSize.small};
     `}
   `}
@@ -98,6 +98,7 @@ export const DateCell = styled.div<DateCellPropsForStyles & ContainerSizeProps>`
     css`
       font-size: ${theme.fontSize.h6};
       min-height: ${CELL_MIN_HEIGHT_COMPACT};
+      grid-template-rows: 70% 30%;
     `}
     ${($isSelected || $isRangeEnd || $isRangeStart) &&
     css`

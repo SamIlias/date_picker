@@ -6,8 +6,8 @@ const MODAL_MAX_WIDTH = '400px';
 const MODAL_Z_INDEX = 100;
 const CONFIRM_Z_INDEX = 1000;
 const MAX_WIDTH_CONFIRM = '300px';
-const OVERLAY_COLOR = '#00000033';
-const CONFIRM_OVERLAY_COLOR = '#000000E5';
+const OVERLAY_COLOR = 'rgba(0,0,0,0.63)';
+const CONFIRM_OVERLAY_COLOR = 'rgba(0,0,0,0.76)';
 
 const flexCenter = css`
   display: flex;
