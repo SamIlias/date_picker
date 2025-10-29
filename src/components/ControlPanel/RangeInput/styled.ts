@@ -1,40 +1,37 @@
 import styled, { css } from 'styled-components';
 
-export { DateInputField, Label } from '@/components/ControlPanel/DateInput/styled';
+import { buttonBaseStyles } from '@/components/commonStyles';
+import { ContainerSize } from '@/context/SizeContext';
+import { ContainerSizeProps } from '@/styled';
 
-const MAX_DATE_INPUT_WIDTH = '300px';
+export { DateInput, DateInputField, Label } from '@/components/ControlPanel/DateInput/styled';
 
-export const RangeInput = styled.div`
-  ${({ theme }) => css`
+const BUTTON_HEIGHT = '36px';
+
+export const RangeInput = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     display: flex;
-    gap: ${theme.spacing.base};
-    align-items: flex-end;
+    width: 100%;
+    gap: ${theme.spacing.sm};
+    margin-bottom: ${theme.spacing.base};
 
-    @media screen and ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       flex-direction: column;
       align-items: stretch;
-    }
+    `}
   `}
 `;
 
-export const DateInputGroup = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.xs};
-    flex: 1;
-  `}
-`;
+export const ClearButton = styled.button<ContainerSizeProps>`
+  ${buttonBaseStyles}
+  ${({ $containerSize }) => css`
+    align-self: end;
+    height: ${BUTTON_HEIGHT};
 
-export const DateInput = styled.div`
-  ${({ theme }) => css`
-    display: flex;
-    flex-direction: column;
-    gap: ${theme.spacing.xs};
-    max-width: ${MAX_DATE_INPUT_WIDTH};
-
-    @media ${theme.breakpoint.mobile} {
-      max-width: 100%;
-    }
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
+      align-self: stretch;
+    `}
   `}
 `;

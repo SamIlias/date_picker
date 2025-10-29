@@ -1,11 +1,13 @@
 node_modules/
 dist/
 build/
+coverage/
 *.tsbuildinfo
 .env
 *.log
 *.cache
 .idea
+*.tgz
 
 *storybook.log
 storybook-static

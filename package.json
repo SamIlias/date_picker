@@ -1,11 +1,13 @@
 {
-  "name": "@ilya/datepicker",
+  "name": "@sam/datepicker",
   "version": "1.0.0",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
+  "files": ["dist", "README.md"],
   "types": "dist/index.d.ts",
   "license": "MIT",
   "type": "module",
+  "homepage": "https://github.com/SamIlias/date_picker",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
@@ -60,6 +62,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-simple-import-sort": "^12.1.1",
     "eslint-plugin-storybook": "^9.1.10",
+    "gh-pages": "^6.3.0",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "jest": "^30.2.0",

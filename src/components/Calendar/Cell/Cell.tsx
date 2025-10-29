@@ -1,3 +1,5 @@
+import { useContainerSize } from '@/context/SizeContext';
+
 import * as S from './styled';
 
 export interface CellProps<T> {
@@ -11,8 +13,10 @@ export function Cell<T>({ value, onClick, $isCurrent }: CellProps<T>) {
     onClick(value);
   };
 
+  const containerSize = useContainerSize();
+
   return (
-    <S.Cell onClick={handleClick} $isCurrent={$isCurrent}>
+    <S.Cell $containerSize={containerSize} onClick={handleClick} $isCurrent={$isCurrent}>
       {String(value)}
     </S.Cell>
   );

@@ -1,5 +1,8 @@
 import styled, { css } from 'styled-components';
 
+import { ContainerSize } from '@/context/SizeContext';
+import { ContainerSizeProps } from '@/styled';
+
 const MIN_SELECT_WIDTH = '150px';
 const CHECKBOX_SIZE = '18px';
 const TRANSITION_DURATION = '0.2s';
@@ -9,23 +12,25 @@ export const Settings = styled.div`
     display: flex;
     flex-direction: column;
     gap: ${theme.spacing.base};
+    margin-bottom: ${theme.spacing.base};
   `}
 `;
 
-export const SettingsRow = styled.div`
-  ${({ theme }) => css`
+export const SelectGroup = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     display: flex;
     gap: ${theme.spacing.base};
     flex-wrap: wrap;
 
-    @media screen and ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       flex-direction: column;
       gap: ${theme.spacing.sm};
-    }
+    `}
   `}
 `;
 
-export const SelectGroup = styled.div`
+export const SelectContainer = styled.div`
   ${({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -67,17 +72,18 @@ export const Select = styled.select`
   `}
 `;
 
-export const CheckboxGroup = styled.div`
-  ${({ theme }) => css`
+export const CheckboxGroup = styled.div<ContainerSizeProps>`
+  ${({ theme, $containerSize }) => css`
     display: flex;
     gap: ${theme.spacing.base};
     align-items: center;
 
-    @media screen and ${theme.breakpoint.mobile} {
+    ${$containerSize === ContainerSize.COMPACT &&
+    css`
       flex-direction: column;
       align-items: flex-start;
       gap: ${theme.spacing.sm};
-    }
+    `}
   `}
 `;
 

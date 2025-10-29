@@ -4,13 +4,9 @@ const TRANSITION_DURATION = '0.2s';
 
 export const DateInput = styled.div`
   display: flex;
+  width: 100%;
   flex-direction: column;
   gap: ${({ theme }) => theme.spacing.xs};
-  max-width: 30%;
-
-  @media ${({ theme }) => theme.breakpoint.mobile} {
-    max-width: 100%;
-  }
 `;
 
 export const Label = styled.label`
@@ -32,6 +28,7 @@ export const DateInputField = styled.input.attrs({ type: 'date' })`
     color: ${theme.color.text.primary};
     background-color: ${theme.color.background.primary};
     transition: border-color ${TRANSITION_DURATION};
+    cursor: pointer;
 
     &:hover {
       border-color: ${theme.color.text.secondary};
@@ -40,10 +37,6 @@ export const DateInputField = styled.input.attrs({ type: 'date' })`
     &:focus {
       outline: none;
       border-color: ${theme.color.background.activeCell};
-    }
-
-    &::placeholder {
-      color: ${theme.color.text.placeholder};
     }
   `}
 `;
