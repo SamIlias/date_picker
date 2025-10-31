@@ -1,10 +1,13 @@
 {
   "name": "sam-datepicker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Custom date picker component built with React and styled-components.",
   "main": "dist/index.cjs.js",
   "module": "dist/index.esm.js",
-  "files": ["dist", "README.md"],
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "types": "dist/index.d.ts",
   "license": "MIT",
   "type": "module",
@@ -28,7 +31,13 @@
   "bugs": {
     "url": "https://github.com/SamIlias/date_picker/issues"
   },
-  "keywords": ["react", "datepicker", "calendar", "component", "ui"],
+  "keywords": [
+    "react",
+    "datepicker",
+    "calendar",
+    "component",
+    "ui"
+  ],
   "author": "Samovich Ilya <Samovichilya0@gmail.com>",
   "dependencies": {
     "react": "^19.1.1",
