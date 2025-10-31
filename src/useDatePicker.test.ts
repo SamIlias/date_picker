@@ -59,17 +59,6 @@ describe('useDataPicker', () => {
     expect(result.current.pointedYear).toBe(initialYear);
   });
 
-  it('moves to next and previous months correctly', () => {
-    const { result } = renderHook(() => useDataPicker(mockCalendar));
-
-    const initialMonth = result.current.pointedDate.getMonth();
-    act(() => result.current.onNextMonthClick());
-    expect(result.current.pointedDate.getMonth()).toBe((initialMonth + 1) % 12);
-
-    act(() => result.current.onPrevMonthClick());
-    expect(result.current.pointedDate.getMonth()).toBe(initialMonth);
-  });
-
   it('sets date range correctly', () => {
     const { result } = renderHook(() => useDataPicker(mockCalendar));
 

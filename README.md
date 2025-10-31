@@ -18,10 +18,10 @@ Sam DatePicker is a modular and flexible React date picker library with support 
 ## Installation
 ```bash
 # with npm
-npm install @sam/datepicker
+npm install sam-datepicker
 
 # or with yarn
-yarn add @sam/datepicker
+yarn add sam-datepicker
 ```
 
 ## Extended Example
@@ -34,8 +34,8 @@ import {
   holidaysBelarus,
   Views,
   WeekStartsOn,
-} from '@sam/datepicker';
-import { ThemeColor } from '@sam/datepicker/theme';
+} from 'sam-datepicker';
+import { ThemeColor } from 'sam-datepicker/theme';
 
 const config: CalendarConfig = {
   view: Views.WEEKS,
